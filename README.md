@@ -1,3 +1,5 @@
+![Local Image](src/main/resources/static/squared.jpg)
+
 # Group Contract: Squared
 
 ## Members
