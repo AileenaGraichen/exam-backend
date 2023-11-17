@@ -1,6 +1,4 @@
-![Local Image](src/main/resources/static/squared.jpg)
-
-# Group Contract: Squared
+# Group Contract: Squared                                            ![Local Image](src/main/resources/static/squared.jpg)
 
 ## Members
 - Simon Hansen
