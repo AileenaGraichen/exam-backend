@@ -18,7 +18,7 @@
     - Schedule a meeting with the absent member to discuss their attendance issues.
     - During the meeting, voice the group's concerns and try to understand the reasons behind the repeated absences.
     - Collectively work on finding a solution that ensures better attendance and participation from the absent member.
-If the issue persists, consider adjustments to the group's workload or responsibilities to accommodate the member's availability.
+- If the issue persists, consider adjustments to the group's workload or responsibilities to accommodate the member's availability.
 
 ## Branching
 We will use a feature branching strategy for our project. Each new feature or task is developed in a dedicated branch, allowing us to work on different aspects of the project simultaneously without interfering with each other's work. Feature branches are created from the main development branch.
