@@ -18,15 +18,11 @@
     - Schedule a meeting with the absent member to discuss their attendance issues.
     - During the meeting, voice the group's concerns and try to understand the reasons behind the repeated absences.
     - Collectively work on finding a solution that ensures better attendance and participation from the absent member.
-    - If the issue persists, consider adjustments to the group's workload or responsibilities to accommodate the member's availability.
+If the issue persists, consider adjustments to the group's workload or responsibilities to accommodate the member's availability.
 
 ## Branching
-- We will use a feature branching strategy for our project.
-- Each new feature or task is developed in a dedicated branch, allowing us to work on different aspects of the project simultaneously without interfering with each other's work. Feature branches are created from the main development branch.
-  Once the feature is complete, it is merged back into the main branch.
-- This strategy helps us maintain a structured and organized development process.
-- We will use Jira's branch naming conventions.
-- Every branch shall be reviewed by two people before merging into the main branch.
+We will use a feature branching strategy for our project. Each new feature or task is developed in a dedicated branch, allowing us to work on different aspects of the project simultaneously without interfering with each other's work. Feature branches are created from the main development branch.
+Once the feature is complete, it is merged back into the main branch. This strategy helps us maintain a structured and organized development process. We will use Jira's branch naming conventions. Every branch shall be reviewed by two people before merging into the main branch.
 
 ## Agreement
 By participating in this group, we agree to abide by the terms and guidelines outlined in this contract. We understand the importance of commitment, communication, and collaboration for the success of our project.
