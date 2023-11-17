@@ -22,8 +22,8 @@
 If the issue persists, consider adjustments to the group's workload or responsibilities to accommodate the member's availability.
 
 ## Branching
-We will use a feature branching strategy for our project. Each new feature or task is developed in a dedicated branch, allowing us to work on different aspects of the project simultaneously without interfering with each other's work. Feature branches are created from the main development branch.
-Once the feature is complete, it is merged back into the main branch. This strategy helps us maintain a structured and organized development process. We will use Jira's branch naming conventions. Every branch shall be reviewed by two people before merging into the main branch.
+We will use the Gitflow branching strategy for our project. We will have a production branch (main), a staging branch and a developer branch. Each new feature or task is developed in a dedication branch created from the developer branch. After a sprint, the developer branch is merged into the staging branch, where it will be tested before being merged with the production branch. This will allow us to work on different aspects of the project simultaneously without interfering with each other's work. Furthermore, the use of the different branches will allow us to test the code on the staging branch after a sprint, while starting on the next sprint on the developer branch. When the code is tested it can finally be merged to the production branch without ruining anything.  
+This strategy helps us maintain a structured and organized development process. We will use the branch naming convention [story_type]/[story_id]/[story_name] from Shortcut ex: feature/sc-123/create-login. Every branch shall be reviewed by two people before merging into the main branch.
 
 ## Agreement
 By participating in this group, we agree to abide by the terms and guidelines outlined in this contract. We understand the importance of commitment, communication, and collaboration for the success of our project.
