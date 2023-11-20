@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserWithRoleController {
 
   //Take care with this. If no role is required for new users, add null as the value below
-  static Role DEFAULT_ROLE_TO_ASSIGN = Role.USER;
+  static Role DEFAULT_ROLE_TO_ASSIGN = null;
 
   UserWithRolesService userWithRolesService;
 
