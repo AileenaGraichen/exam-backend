@@ -3,8 +3,11 @@ package dat3.partner.api;
 import dat3.partner.dto.LocationRequest;
 import dat3.partner.dto.LocationResponse;
 import dat3.partner.service.LocationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @RestController
@@ -18,9 +21,10 @@ public class LocationController {
     }
 
     @GetMapping
-    public List<LocationResponse> getAllLocations(){
-        return locationService.getAllLocations();
+    public Page<LocationResponse> getAllLocations(Pageable pageable){
+        return locationService.getAllLocations(pageable);
     }
+
 
     @GetMapping("/{id}")
     public LocationResponse getOneLocation(@PathVariable int id){

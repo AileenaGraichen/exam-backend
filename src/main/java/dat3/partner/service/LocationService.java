@@ -5,6 +5,8 @@ import dat3.partner.dto.LocationResponse;
 import dat3.partner.entity.Location;
 import dat3.partner.repository.LocationRepository;
 import dat3.security.dto.LoginRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,9 +22,9 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
-    public List<LocationResponse> getAllLocations(){
-        List<Location> locations = locationRepository.findAll();
-        return locations.stream().map(location -> new LocationResponse(location)).toList();
+    public Page<LocationResponse> getAllLocations(Pageable pageable){
+        Page<Location> locations = locationRepository.findAll(pageable);
+        return locations.map(location -> new LocationResponse(location));
     }
 
     public LocationResponse getOneLocation(int id) {

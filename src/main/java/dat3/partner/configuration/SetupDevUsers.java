@@ -1,5 +1,7 @@
 package dat3.partner.configuration;
 
+import dat3.partner.entity.Location;
+import dat3.partner.repository.LocationRepository;
 import dat3.security.entity.Role;
 import dat3.security.entity.UserWithRoles;
 import org.springframework.boot.ApplicationArguments;
@@ -12,19 +14,28 @@ import dat3.security.repository.UserWithRolesRepository;
 public class SetupDevUsers implements ApplicationRunner {
 
     UserWithRolesRepository userWithRolesRepository;
+    LocationRepository locationRepository;
     PasswordEncoder passwordEncoder;
     String passwordUsedByAll;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         this.passwordEncoder = passwordEncoder;
         passwordUsedByAll = "test12";
+        this.locationRepository = locationRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
+        Location l1 = new Location("DueOdde", "BonBonLandsvej");
+        locationRepository.save(l1);
         setupUserWithRoleUsers();
     }
+
+
+
+
+
 
      /*****************************************************************************************
      IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
