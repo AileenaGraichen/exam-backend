@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UserWithRolesService {
 
@@ -21,6 +23,11 @@ public class UserWithRolesService {
   public UserWithRolesResponse getUserWithRoles(String id){
     UserWithRoles user = userWithRolesRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     return new UserWithRolesResponse(user);
+  }
+
+  public List<UserWithRolesResponse> getUsers(){
+    List<UserWithRoles> users = userWithRolesRepository.findAll();
+    return users.stream().map(user -> new UserWithRolesResponse(user)).toList();
   }
 
   //Make sure that this can ONLY be called by an admin

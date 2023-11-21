@@ -7,6 +7,8 @@ import dat3.security.service.UserWithRolesService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user-with-role")
 public class UserWithRoleController {
@@ -18,6 +20,11 @@ public class UserWithRoleController {
 
   public UserWithRoleController(UserWithRolesService userWithRolesService) {
     this.userWithRolesService = userWithRolesService;
+  }
+
+  @GetMapping
+  public List<UserWithRolesResponse> getUsers(){
+    return userWithRolesService.getUsers();
   }
 
   //Anonymous users can call this. Set DEFAULT_ROLE_TO_ASSIGN to null if no role should be added
