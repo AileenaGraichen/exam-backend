@@ -1,11 +1,9 @@
 package dat3.partner.api;
 
+import dat3.partner.dto.LocationRequest;
 import dat3.partner.dto.LocationResponse;
 import dat3.partner.service.LocationService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +27,17 @@ public class LocationController {
         return locationService.getOneLocation(id);
     }
 
+    @PostMapping
+    public LocationResponse addLocation(@RequestBody LocationRequest body){
+        return locationService.addLocation(body);
+    }
+    @PutMapping("/{id}")
+    public LocationResponse editLocation(@PathVariable int id, @RequestBody LocationRequest body){
+        return locationService.editLocation(id, body);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteLocation(@PathVariable int id){
+        locationService.deleteLocation(id);
+    }
 
 }

@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class LocationRequest {
-    int id;
     String locationName;
     String address;
 }
