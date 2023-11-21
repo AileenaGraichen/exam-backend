@@ -21,4 +21,10 @@ public class Location {
     String locationName;
 
     String address;
+
+    public Location(String locationName, String address)
+    {
+        this.locationName = locationName;
+        this.address = address;
+    }
 }
