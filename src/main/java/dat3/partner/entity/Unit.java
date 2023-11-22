@@ -29,9 +29,10 @@ public class Unit {
     @ManyToOne
     private Location location;
 
-    /*
     @OneToOne
-    UnitInfo
+    UnitInfo unitInfo;
+
+    /*
 
     @OneToMany
     List<UnitTask> unitTasks;
