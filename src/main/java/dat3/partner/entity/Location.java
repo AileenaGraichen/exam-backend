@@ -18,15 +18,15 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name="location_name")
-    String locationName;
+    private String locationName;
 
-    String address;
+    private String address;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    List<Unit> units;
+    private List<Unit> units;
 
     public void addUnit(Unit unit){
         if(units == null){

@@ -39,6 +39,9 @@ public class Unit {
     @OneToMany
     List<MaintenanceTask> maintenanceTasks;
 
+    Create joint table with cleanplans.
+    List<CleaningPlan> cleanPlans;
+
     public void addUnitTask(UnitTask unitTask){
         if(unitTasks == null){
             unitTasks = new ArrayList<>();
@@ -53,8 +56,7 @@ public class Unit {
     }
     */
 
-    public Unit(int unitNumber, UnitStatus status, Location location)
-    {
+    public Unit(int unitNumber, UnitStatus status, Location location) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
         this.unitStatus = status;
