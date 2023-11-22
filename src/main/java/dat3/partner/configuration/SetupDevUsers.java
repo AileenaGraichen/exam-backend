@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class SetupDevUsers implements ApplicationRunner {
 
@@ -27,13 +30,25 @@ public class SetupDevUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        Location l1 = new Location("DueOdde", "BonBonLandsvej");
-        locationRepository.save(l1);
+        setupLocations();
         setupUserWithRoleUsers();
     }
 
 
-
+    private void setupLocations(){
+        List<Location> locations = new ArrayList<>();
+        locations.add(new Location("DueOdde", "BonBonLandsvej"));
+        locations.add(new Location("Bornholm Art Museum", "Gudhjemvej, 25, 3760 Gudhjem"));
+        locations.add(new Location("Dueodde Beach", "Dueoddevej, 3730 Nexø"));
+        locations.add(new Location("Helligdomsklipperne", "Rø Plantagevej, 3770 Allinge"));
+        locations.add(new Location("Osterlars Church", "Rønnevej, 12, 3760 Gudhjem"));
+        locations.add(new Location("Hammerknuden, Vang Granite Quarry", "Kystvejen, 3770 Allinge"));
+        locations.add(new Location("Ekkodalen", "Ekkodalsvej, 3770 Allinge"));
+        locations.add(new Location("Almindingen Forest", "Almindingen, 3770 Allinge"));
+        locations.add(new Location("Nexø Old Smokehouse", "Sdr. Strandvej, 3730 Nexø"));
+        locations.add(new Location("Hammershus Castle", "Hammershusvej, 3, 3770 Allinge"));
+        locationRepository.saveAll(locations);
+    }
 
 
 
