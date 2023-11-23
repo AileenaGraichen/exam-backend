@@ -13,9 +13,7 @@ import java.util.List;
 @Repository
 public interface UnitRepository extends JpaRepository<Unit, Integer> {
     Page<Unit> getUnitsByLocationId(Pageable pageable, int id);
-
-    @Query("SELECT u FROM Unit u JOIN u.unitInfo ui WHERE ui.type = :type")
-    Page<Unit> findByUnitInfoType(Pageable pageable, @Param("type") String type);
+    Page<Unit> findUnitsByType(Pageable pageable, String type);
 
     boolean existsByLocationIdAndAndUnitNumber(int locationId, String number);
     boolean existsByLocationId(int locationId);

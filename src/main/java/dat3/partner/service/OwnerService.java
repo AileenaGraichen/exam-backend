@@ -29,10 +29,10 @@ public class OwnerService {
         return new OwnerResponse(owner);
     }
 
-    public Page<OwnerResponse> getOwnersByName(Pageable pageable, String name) {
-        Page<Owner> owners = ownerRepository.findByFirstNameOrLastNameContainingIgnoreCase(name, pageable);
+   /* public Page<OwnerResponse> getOwnersByName(Pageable pageable, String name) {
+        Page<Owner> owners = ownerRepository.findByFirstNameContainingOrLastNameContainingIgnoreCase(name, pageable);
         return owners.map(owner -> new OwnerResponse(owner));
-    }
+    }*/
 
     public OwnerResponse addOwner(OwnerRequest body) {
         if(ownerRepository.existsOwnerByMobile(body.getMobile())){

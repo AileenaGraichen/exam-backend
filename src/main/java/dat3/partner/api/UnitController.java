@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/unit")
 public class UnitController {
@@ -26,7 +28,7 @@ public class UnitController {
         return unitService.getUnitsByLocationId(pageable, id);
     }
 
-    @GetMapping("/bytype")
+    @GetMapping("/by/type")
     public Page<UnitResponse> getUnitsByType(Pageable pageable, @RequestParam(name="type", required = false)String type){
         return unitService.getUnitsByType(pageable, type);
     }

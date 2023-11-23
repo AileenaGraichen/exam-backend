@@ -1,5 +1,6 @@
 package dat3.partner.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,15 +25,32 @@ public class Unit {
     @Column(name="status", columnDefinition = "ENUM('AVAILABLE','IN_PROGRESS','UNAVAILABLE')")
     private UnitStatus unitStatus;
 
+    @JsonIgnore
     @ManyToOne
     private Location location;
 
     private String type;
     private String keyCode;
 
+    @JsonIgnore
     @ManyToOne
     private Owner owner;
-    /*
+
+    public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
+        //Add extra objects to constructor when implementing other entities
+        this.unitNumber = unitNumber;
+        this.unitStatus = status;
+        this.location = location;
+        this.owner = owner;
+        this.type = type;
+        this.keyCode = keyCode;
+        owner.addUnit(this);
+    }
+
+
+}
+
+  /*
 
     @OneToMany
     List<UnitTask> unitTasks;
@@ -56,17 +74,3 @@ public class Unit {
         maintenanceTasks.add(mTask);
     }
     */
-
-    public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
-        //Add extra objects to constructor when implementing other entities
-        this.unitNumber = unitNumber;
-        this.unitStatus = status;
-        this.location = location;
-        this.owner = owner;
-        this.type = type;
-        this.keyCode = keyCode;
-        owner.addUnit(this);
-    }
-
-
-}

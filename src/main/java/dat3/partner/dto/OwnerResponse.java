@@ -19,7 +19,7 @@ public class OwnerResponse {
     private String lastName;
     private String email;
     private String mobile;
-    private List<Unit> unitList;
+    private List<UnitResponse> unitList;
 
     public OwnerResponse(Owner owner){
         this.id = owner.getId();
@@ -27,6 +27,6 @@ public class OwnerResponse {
         this.lastName = owner.getLastName();
         this.email = owner.getEmail();
         this.mobile = owner.getMobile();
-        this.unitList = owner.getUnitList();
+        this.unitList = owner.getUnitList().stream().map(UnitResponse::new).toList();
     }
 }

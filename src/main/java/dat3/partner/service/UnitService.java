@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UnitService {
     UnitRepository unitRepository;
@@ -28,6 +30,8 @@ public class UnitService {
     }
 
     public Page<UnitResponse> getAllUnits(Pageable pageable) {
+        /*List<Unit> units = unitRepository.findAll();
+        return units.stream().map(unit -> new UnitResponse(unit)).toList();*/
         Page<Unit> units = unitRepository.findAll(pageable);
         return  units.map(unit -> new UnitResponse(unit));
     }
@@ -38,7 +42,7 @@ public class UnitService {
     }
 
     public Page<UnitResponse> getUnitsByType(Pageable pageable, String type) {
-        Page<Unit> units = unitRepository.findByUnitInfoType(pageable, type);
+        Page<Unit> units = unitRepository.findUnitsByType(pageable, type);
         return units.map(unit -> new UnitResponse(unit));
     }
 

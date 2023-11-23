@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
-    Page<Owner> findByFirstNameOrLastNameContainingIgnoreCase(String name, Pageable pageable);
+    //Page<Owner> findByFirstNameContainingOrLastNameContainingIgnoreCase(String name, Pageable pageable);
 
     Owner findByMobile(String mobile);
 

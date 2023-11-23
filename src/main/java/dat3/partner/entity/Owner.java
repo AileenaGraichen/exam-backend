@@ -23,8 +23,8 @@ public class Owner {
     private String email;
     private String mobile;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Unit> unitList;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Unit> unitList = new ArrayList<>();
 
     public void addUnit(Unit unit){
         if(unitList == null){

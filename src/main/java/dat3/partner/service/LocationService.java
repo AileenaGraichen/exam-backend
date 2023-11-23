@@ -73,4 +73,5 @@ public class LocationService {
             locationRepository.deleteById(id);
         }
     }
+
 }
