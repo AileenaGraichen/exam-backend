@@ -21,7 +21,7 @@ public class OwnerRepositoryTest {
 
     }
 
-    @Test
+    //@Test
     void testFindByNameContainingSucces(){
     }
 }
