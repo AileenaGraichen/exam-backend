@@ -45,10 +45,23 @@ public class UserWithRolesService {
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
 
+  public void deleteUser(String username){
+    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
+    userWithRolesRepository.delete(user);
+  }
+
   //Only way to change roles is via the addRole method
   public UserWithRolesResponse editUserWithRoles(String username , UserWithRolesRequest body){
     UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
+    if(userWithRolesRepository.existsByEmail(body.getEmail())){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This email is used by another user");
+    }
     user.setEmail(body.getEmail());
+    return new UserWithRolesResponse(userWithRolesRepository.save(user));
+  }
+
+  public UserWithRolesResponse editPasswordUserWithRoles(String username , UserWithRolesRequest body){
+    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     user.setPassword(body.getPassword());
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
