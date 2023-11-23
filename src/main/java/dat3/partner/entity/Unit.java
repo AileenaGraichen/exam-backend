@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,10 +15,10 @@ public class Unit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name="unit_number")
-    private int unitNumber;
+    private String unitNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name="status", columnDefinition = "ENUM('AVAILABLE','IN_PROGRESS','UNAVAILABLE')")
@@ -29,9 +27,11 @@ public class Unit {
     @ManyToOne
     private Location location;
 
-    @OneToOne
-    UnitInfo unitInfo;
+    private String type;
+    private String keyCode;
 
+    @ManyToOne
+    private Owner owner;
     /*
 
     @OneToMany
@@ -57,12 +57,15 @@ public class Unit {
     }
     */
 
-    public Unit(int unitNumber, UnitStatus status, Location location) {
+    public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
         this.unitStatus = status;
         this.location = location;
-        location.addUnit(this);
+        this.owner = owner;
+        this.type = type;
+        this.keyCode = keyCode;
+        owner.addUnit(this);
     }
 
 

@@ -4,6 +4,7 @@ import dat3.partner.dto.LocationRequest;
 import dat3.partner.dto.LocationResponse;
 import dat3.partner.entity.Location;
 import dat3.partner.repository.LocationRepository;
+import dat3.partner.repository.UnitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,8 @@ public class LocationServiceTest {
 
     @Autowired
     LocationRepository locationRepository;
+    @Autowired
+    UnitRepository unitRepository;
 
     LocationService locationService;
 
@@ -39,7 +42,7 @@ public class LocationServiceTest {
         locationRepository.save(l2);
         locationRepository.save(l3);
         locationRepository.save(l4);
-        locationService = new LocationService(locationRepository);
+        locationService = new LocationService(locationRepository, unitRepository);
     }
 
     @Test

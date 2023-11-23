@@ -35,7 +35,7 @@ public class LocationController {
     public LocationResponse addLocation(@RequestBody LocationRequest body){
         return locationService.addLocation(body);
     }
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public LocationResponse editLocation(@PathVariable int id, @RequestBody LocationRequest body){
         return locationService.editLocation(id, body);
     }
@@ -43,5 +43,4 @@ public class LocationController {
     public void deleteLocation(@PathVariable int id){
         locationService.deleteLocation(id);
     }
-
 }

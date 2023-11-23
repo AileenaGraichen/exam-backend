@@ -24,12 +24,20 @@ public class Owner {
     private String mobile;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<UnitInfo> unitInfoList;
+    private List<Unit> unitList;
 
-    public void addUnitInfo(UnitInfo unitInfo){
-        if(unitInfoList == null){
-            unitInfoList = new ArrayList<>();
+    public void addUnit(Unit unit){
+        if(unitList == null){
+            unitList = new ArrayList<>();
         }
-        unitInfoList.add(unitInfo);
+        unitList.add(unit);
+    }
+
+    public Owner(String firstName, String lastName, String email, String mobile)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.mobile = mobile;
     }
 }

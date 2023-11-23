@@ -15,13 +15,15 @@ import lombok.*;
 public class UnitResponse {
 
     private int id;
-    private int unitNumber;
+    private String unitNumber;
     private UnitStatus status;
     private Location location;
 
-    //UnitInfo
+
+
     //List<UnitTasks>
     //List<MaintenanceTasks>
+    //List<CleaningTask>
 
     public UnitResponse(Unit unit) {
         this.id = unit.getId();
