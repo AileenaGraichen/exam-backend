@@ -61,7 +61,6 @@ public class LocationService {
         return new LocationResponse(editLocation);
     }
 
-    //TODO Delete location (if empty)
     public void deleteLocation(int id) {
         if(unitRepository.existsByLocationId(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Units are attached to this location");
