@@ -1,6 +1,5 @@
 package dat3.partner.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -9,7 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LocationRequest {
-    private String locationName;
-    private String address;
+public class OwnerRequest {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String mobile;
 }

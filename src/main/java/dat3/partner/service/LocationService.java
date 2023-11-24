@@ -4,6 +4,7 @@ import dat3.partner.dto.LocationRequest;
 import dat3.partner.dto.LocationResponse;
 import dat3.partner.entity.Location;
 import dat3.partner.repository.LocationRepository;
+import dat3.partner.repository.UnitRepository;
 import dat3.security.dto.LoginRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,12 @@ import java.util.List;
 @Service
 public class LocationService {
     LocationRepository locationRepository;
+    UnitRepository unitRepository;
 
-    public LocationService(LocationRepository locationRepository)
+    public LocationService(LocationRepository locationRepository, UnitRepository unitRepository)
     {
         this.locationRepository = locationRepository;
+        this.unitRepository = unitRepository;
     }
 
     public Page<LocationResponse> getAllLocations(Pageable pageable){
@@ -50,24 +53,24 @@ public class LocationService {
         if(!locationRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location with that id does not exist");
         }
-        Location editLocation = new Location(id, body.getLocationName(), body.getAddress());
-        editLocation = locationRepository.save(editLocation);
+        Location editLocation = locationRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Location not found"));
+        editLocation.setLocationName(body.getLocationName());
+        editLocation.setAddress(body.getAddress());
 
+        editLocation = locationRepository.save(editLocation);
         return new LocationResponse(editLocation);
     }
 
-    //TODO Delete location (if empty)
     public void deleteLocation(int id) {
-        //Do this method when unit entity backend is built up
-        //Need UnitRepository to check if any of them are
-        //connected to the locationID before deleting
+        if(unitRepository.existsByLocationId(id)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Units are attached to this location");
+        }
+        else if(!locationRepository.existsById(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location with that id does not exist");
+        }
+        else{
+            locationRepository.deleteById(id);
+        }
     }
-
-
-
-
-
-
-
 
 }

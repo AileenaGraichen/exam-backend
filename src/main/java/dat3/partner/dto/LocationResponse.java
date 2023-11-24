@@ -11,9 +11,9 @@ import lombok.*;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LocationResponse {
-    int id;
-    String locationName;
-    String address;
+    private int id;
+    private String locationName;
+    private String address;
 
     public LocationResponse(Location location) {
         this.id = location.getId();
