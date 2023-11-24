@@ -64,10 +64,10 @@ public class LocationService {
     //TODO Delete location (if empty)
     public void deleteLocation(int id) {
         if(unitRepository.existsByLocationId(id)){
-            throw new RuntimeException("Can not delete this location because units are attached to it");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Units are attached to this location");
         }
         else if(!locationRepository.existsById(id)){
-            throw new RuntimeException("Location with id: '"+id+"' does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Location with that id does not exist");
         }
         else{
             locationRepository.deleteById(id);
