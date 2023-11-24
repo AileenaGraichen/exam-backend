@@ -53,7 +53,7 @@ public class UserWithRolesService {
   //Only way to change roles is via the addRole method
   public UserWithRolesResponse editUserWithRoles(String username , UserWithRolesRequest body){
     UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
-    if(userWithRolesRepository.existsByEmail(body.getEmail())){
+    if(userWithRolesRepository.existsByEmailAndUsernameNotLike(body.getEmail(), username)){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This email is used by another user");
     }
     user.setEmail(body.getEmail());
