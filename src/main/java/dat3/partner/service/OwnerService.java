@@ -29,6 +29,11 @@ public class OwnerService {
         return new OwnerResponse(owner);
     }
 
+    public OwnerResponse getOwnerById(int id){
+        Owner owner = ownerRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner with that ID does not exist"));
+        return new OwnerResponse(owner);
+    }
+
    /* public Page<OwnerResponse> getOwnersByName(Pageable pageable, String name) {
         Page<Owner> owners = ownerRepository.findByFirstNameContainingOrLastNameContainingIgnoreCase(name, pageable);
         return owners.map(owner -> new OwnerResponse(owner));

@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface UnitRepository extends JpaRepository<Unit, Integer> {
     Page<Unit> getUnitsByLocationId(Pageable pageable, int id);
+
+    Page<Unit> getUnitByOwnerId(Pageable pageable, int id);
     Page<Unit> findUnitsByType(Pageable pageable, String type);
 
     boolean existsByLocationIdAndAndUnitNumber(int locationId, String number);
