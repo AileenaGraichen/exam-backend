@@ -46,6 +46,11 @@ public class UnitService {
         return units.map(unit -> new UnitResponse(unit));
     }
 
+    public Page<UnitResponse> getUnitsByOwnerId(Pageable pageable, int ownerId){
+        Page<Unit> units = unitRepository.getUnitByOwnerId(pageable, ownerId);
+        return units.map(unit -> new UnitResponse(unit));
+    }
+
     public UnitResponse addUnit(UnitRequest body) {
         if(unitRepository.existsByLocationIdAndAndUnitNumber(body.getLocationId(), body.getUnitNumber())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unit with number "+body.getUnitNumber()+" in that location already exists");

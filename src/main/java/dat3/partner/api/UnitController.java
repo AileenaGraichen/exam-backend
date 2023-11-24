@@ -28,6 +28,11 @@ public class UnitController {
         return unitService.getUnitsByLocationId(pageable, id);
     }
 
+    @GetMapping("owner/{id}")
+    public Page<UnitResponse> getUnitsByOwnerId(@PathVariable int id, Pageable pageable){
+        return unitService.getUnitsByOwnerId(pageable, id);
+    }
+
     @GetMapping("/by/type")
     public Page<UnitResponse> getUnitsByType(Pageable pageable, @RequestParam(name="type", required = false)String type){
         return unitService.getUnitsByType(pageable, type);
