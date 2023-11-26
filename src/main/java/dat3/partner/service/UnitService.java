@@ -82,6 +82,8 @@ public class UnitService {
         return new UnitResponse(unitRepository.save(unit));
     }
 
+
+    //TODO When tasks and cleaning plan are connected to unit, dont allow deletion
     public void deleteUnitById(int id) {
         Unit unit = unitRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No unit with this id found"));

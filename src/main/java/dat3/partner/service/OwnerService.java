@@ -53,7 +53,6 @@ public class OwnerService {
         return new OwnerResponse(newOwner);
     }
 
-    //How about UnitInfo(List)?
     public OwnerResponse editOwner(int id, OwnerRequest body) {
         if(!ownerRepository.existsById(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner with that ID does not exist");
@@ -72,7 +71,7 @@ public class OwnerService {
         if (ownerRepository.existsById(id)) {
             ownerRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Owner with ID " + id + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner with that id does not exist");
         }
     }
 }
