@@ -25,16 +25,17 @@ public class UnitRepositoryTest {
     @Autowired
     OwnerRepository ownerRepository;
 
+    Location l1;
     @BeforeEach
     void setup(){
-        Location l1 = locationRepository.save(new Location("DueOdde", "Havnevej 23"));
+        l1 = locationRepository.save(new Location("DueOdde", "Havnevej 23"));
         Owner o1 = ownerRepository.save(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
         unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1"));
     }
 
     @Test
     void testExistsByLocationIdAndUnitNumber(){
-        boolean result = unitRepository.existsByLocationIdAndAndUnitNumber(1, "U001");
+        boolean result = unitRepository.existsByLocationIdAndAndUnitNumber(l1.getId(), "U001");
         assertTrue(result);
     }
 }

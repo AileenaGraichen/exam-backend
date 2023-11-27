@@ -19,7 +19,6 @@ public class TestUtils {
     user1.addRole(Role.TECH);
     user2.addRole(Role.TECH);
     user3.addRole(Role.ADMIN);
-    user4.addRole(Role.CLEAN);
     userWithRolesRepository.save(user1);
     userWithRolesRepository.save(user2);
     userWithRolesRepository.save(user3);
