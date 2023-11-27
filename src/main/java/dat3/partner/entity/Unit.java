@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,6 +38,16 @@ public class Unit {
     @JsonIgnore
     @ManyToOne
     private Owner owner;
+
+    @ManyToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    List<CleaningPlan> cleaningPlans;
+
+    public void addCleaningPlans(CleaningPlan cleaningPlan){
+        if(cleaningPlans == null){
+            cleaningPlans = new ArrayList<>();
+        }
+        cleaningPlans.add(cleaningPlan);
+    }
 
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
