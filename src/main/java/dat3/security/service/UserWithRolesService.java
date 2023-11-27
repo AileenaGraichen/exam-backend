@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class UserWithRolesService {
 
@@ -21,6 +23,11 @@ public class UserWithRolesService {
   public UserWithRolesResponse getUserWithRoles(String id){
     UserWithRoles user = userWithRolesRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     return new UserWithRolesResponse(user);
+  }
+
+  public List<UserWithRolesResponse> getUsers(){
+    List<UserWithRoles> users = userWithRolesRepository.findAll();
+    return users.stream().map(user -> new UserWithRolesResponse(user)).toList();
   }
 
   //Make sure that this can ONLY be called by an admin
@@ -38,10 +45,23 @@ public class UserWithRolesService {
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
 
+  public void deleteUser(String username){
+    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
+    userWithRolesRepository.delete(user);
+  }
+
   //Only way to change roles is via the addRole method
   public UserWithRolesResponse editUserWithRoles(String username , UserWithRolesRequest body){
     UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
+    if(userWithRolesRepository.existsByEmailAndUsernameNotLike(body.getEmail(), username)){
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This email is used by another user");
+    }
     user.setEmail(body.getEmail());
+    return new UserWithRolesResponse(userWithRolesRepository.save(user));
+  }
+
+  public UserWithRolesResponse editPasswordUserWithRoles(String username , UserWithRolesRequest body){
+    UserWithRoles user = userWithRolesRepository.findById(username).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
     user.setPassword(body.getPassword());
     return new UserWithRolesResponse(userWithRolesRepository.save(user));
   }
