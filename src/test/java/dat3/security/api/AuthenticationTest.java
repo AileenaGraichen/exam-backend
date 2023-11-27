@@ -55,8 +55,8 @@ public class AuthenticationTest {
                     .content(objectMapper.writeValueAsString(loginRequest)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.username").value("u1"))
-            .andExpect(jsonPath("$.roles", hasSize(2)))
-            .andExpect(jsonPath("$.roles", containsInAnyOrder("USER","ADMIN")))
+            .andExpect(jsonPath("$.roles", hasSize(3)))
+            .andExpect(jsonPath("$.roles", containsInAnyOrder("CLEAN","ADMIN", "TECH")))
             .andExpect(result -> {
               //Not a bulletproof test, but acceptable. First part should always be the same. A token must always contain two dots.
               String token = JsonPath.read(result.getResponse().getContentAsString(), "$.token");
