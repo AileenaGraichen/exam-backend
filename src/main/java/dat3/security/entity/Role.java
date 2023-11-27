@@ -6,8 +6,9 @@ If you change anything here, you must also change this annotation, used on roles
 @Column(columnDefinition = "ENUM('USER','ADMIN')")
  */
 public enum Role {
-    USER,
-    ADMIN;
+    CLEAN,
+    ADMIN,
+    TECH;
 
     public static Role fromString(String roleString) {
         return Role.valueOf(roleString.trim().toUpperCase());

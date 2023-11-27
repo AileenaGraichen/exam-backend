@@ -59,6 +59,7 @@ public class AuthorizationTest {
     }
   }
 
+
   String loginAndGetToken(String user,String pw) throws Exception {
     LoginRequest loginRequest = new LoginRequest(user,pw);
     MvcResult response = mockMvc.perform(post("/api/auth/login")

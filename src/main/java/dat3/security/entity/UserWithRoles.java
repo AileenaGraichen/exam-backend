@@ -59,7 +59,7 @@ public class UserWithRoles implements UserDetails {
   private LocalDateTime edited;
 
   @Enumerated(EnumType.STRING)
-  @Column(columnDefinition = "ENUM('USER','ADMIN')")
+  @Column(columnDefinition = "ENUM('CLEAN','ADMIN','TECH')")
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "security_role")
   List<Role> roles = new ArrayList<>();
