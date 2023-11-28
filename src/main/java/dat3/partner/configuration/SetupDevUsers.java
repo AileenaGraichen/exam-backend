@@ -102,7 +102,7 @@ public class SetupDevUsers implements ApplicationRunner {
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(5).get(), userWithRolesRepository.findById("user3").get()));
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(6).get(), userWithRolesRepository.findById("user3").get()));
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(7).get(), userWithRolesRepository.findById("user3").get()));
-
+        cleaningPlanRepository.saveAll(plans);
     }
 
 

@@ -65,7 +65,7 @@ public class UserWithRoles implements UserDetails {
   @CollectionTable(name = "security_role")
   List<Role> roles = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
   List<CleaningPlan> cleaningPlans;
 
   public void addCleaningPlans(CleaningPlan cleaningPlan){
