@@ -64,19 +64,30 @@ class UserWithRolesServiceTest {
   }
 
   @Test
-  void editUserWithRoles() {
-    String originalPassword = userWithRolesRepository.findById("u1").get().getPassword();
-    UserWithRolesRequest user1 = new UserWithRolesRequest("u1New", "new_Password", "newMail@a.dk");
+  void editUserEmail() {
+    String originalEmail = userWithRolesRepository.findById("u1").get().getEmail();
+    UserWithRolesRequest user1 = new UserWithRolesRequest("newUsername", "newMail@a.dk", "newPassword");
     UserWithRolesResponse user = userWithRolesService.editUserWithRoles("u1",user1);
     assertEquals("u1", user.getUserName());  //IMPORTANT: The username should not be changed
     assertEquals("newMail@a.dk", user.getEmail());
     UserWithRoles editedUser = userWithRolesRepository.findById("u1").get();
-    assertNotEquals(originalPassword, editedUser.getPassword());
+    assertNotEquals(originalEmail, editedUser.getPassword());
+  }
+
+  @Test
+  void editUserPassword() {
+    String originalEmail = userWithRolesRepository.findById("u1").get().getEmail();
+    UserWithRolesRequest user1 = new UserWithRolesRequest("newUsername", "newMail@a.dk", "newPassword");
+    UserWithRolesResponse user = userWithRolesService.editPasswordUserWithRoles("u1", user1);
+    assertEquals("u1", user.getUserName());  //IMPORTANT: The username should not be changed
+    assertNotEquals("newMail@a.dk", user.getEmail()); //The email should not be changed
+    UserWithRoles editedUser = userWithRolesRepository.findById("u1").get();
+    assertNotEquals(originalEmail, editedUser.getPassword());
   }
 
   @Test
   void addUserWithRolesWithNoRole() {
-    UserWithRolesRequest user = new UserWithRolesRequest("u6", "new_Password", "xx@x.dk");
+    UserWithRolesRequest user = new UserWithRolesRequest("u6", "xx@x.dk", "new_Password");
     UserWithRolesResponse newUser = userWithRolesService.addUserWithRoles(user, null);
     assertEquals(0, newUser.getRoleNames().size());
     assertEquals("u6", newUser.getUserName());
@@ -86,7 +97,7 @@ class UserWithRolesServiceTest {
   }
   @Test
   void addUserWithRolesWithRole() {
-    UserWithRolesRequest user = new UserWithRolesRequest("u6", "new_Password", "xx@x.dk");
+    UserWithRolesRequest user = new UserWithRolesRequest("u6", "xx@x.dk", "new_Password");
     UserWithRolesResponse newUser = userWithRolesService.addUserWithRoles(user, Role.CLEAN);
     assertEquals(1, newUser.getRoleNames().size());
     assertTrue(newUser.getRoleNames().contains("CLEAN"));
