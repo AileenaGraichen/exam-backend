@@ -21,8 +21,15 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
     //List<Owner> findAllByEmailContainsIgnoreCase(String searchFirst);
 
-    List<Owner> findAllByEmailOrFirstNameOrLastNameContainingIgnoreCase(String searchEmail, String searchFirstName, String searchLastName);
+    //List<Owner> findAllByFirstNameOrLastNameOrEmailLikeIgnoreCase(String searchFirstName, String searchLastName, String searchEmail);
+
+    @Query("SELECT o FROM Owner o " +
+            "WHERE LOWER(o.firstName) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
+            "   OR LOWER(o.lastName) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
+            "   OR LOWER(o.email) LIKE LOWER(CONCAT('%', :searchValue, '%'))")
+    List<Owner> findAllBySearchValueIgnoreCase(@Param("searchValue") String searchValue);
 
     @Query("SELECT o FROM Owner o INNER JOIN o.unitList u WHERE u.unitNumber = :unitNumber")
     List<Owner> findOwnersByUnitNumber(@Param("unitNumber") String unitNumber);
 }
+

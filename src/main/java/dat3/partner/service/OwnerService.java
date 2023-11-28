@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,13 +38,17 @@ public class OwnerService {
     }
 
     public List<OwnerResponse> getOwnersBySearch(String search) {
-        List<Owner> owners;
+        List<Owner> owners = new ArrayList<>();
         if(search == null && search.isEmpty()){
             owners = ownerRepository.findAll();
         } else if(containsNumbers(search)){
             owners = ownerRepository.findOwnersByUnitNumber(search);
-        }else {
-            owners = ownerRepository.findAllByEmailOrFirstNameOrLastNameContainingIgnoreCase(search, search, search);
+        }else if(owners.isEmpty()){
+            owners = ownerRepository.findAllBySearchValueIgnoreCase(search);
+        }
+
+        if(owners.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No owner found for search criteria");
         }
 
         return owners.stream().map(owner -> new OwnerResponse(owner)).toList();

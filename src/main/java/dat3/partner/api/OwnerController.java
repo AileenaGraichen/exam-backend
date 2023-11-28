@@ -34,11 +34,6 @@ public class OwnerController {
         return ownerResponses;
     }
 
-    /*@GetMapping("/byname")
-    public Page<OwnerResponse> getOwnerByName(Pageable pageable, @RequestParam(name="name", required = false) String name){
-        return ownerService.getOwnersByName(pageable, name);
-    }*/
-
     @GetMapping("/byMobile")
     public OwnerResponse getGetOwnerByMobile(Pageable pageable, @RequestParam(name="mobile", required = false) String mobile){
         return ownerService.getOwnerByMobile(pageable, mobile);
