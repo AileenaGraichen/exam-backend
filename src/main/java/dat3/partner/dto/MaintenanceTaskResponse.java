@@ -36,8 +36,10 @@ public class MaintenanceTaskResponse {
         this.title = maintenanceTask.getTitle();
         this.status = maintenanceTask.getStatus();
         this.priority = maintenanceTask.getPriority();
-        this.image = Base64.getEncoder().encodeToString(maintenanceTask.getImage());
-        this.MIMEType = new Tika().detect(maintenanceTask.getImage());
+        if(maintenanceTask.getImage() != null) {
+            this.image = Base64.getEncoder().encodeToString(maintenanceTask.getImage());
+            this.MIMEType = new Tika().detect(maintenanceTask.getImage());
+        }
         this.account = new UserWithRolesResponse(maintenanceTask.getAccount());
         this.unit = new UnitResponse(maintenanceTask.getUnit());
     }
