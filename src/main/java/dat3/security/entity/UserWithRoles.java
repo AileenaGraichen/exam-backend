@@ -1,6 +1,7 @@
 package dat3.security.entity;
 
 
+import dat3.partner.entity.CleaningPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,6 +64,16 @@ public class UserWithRoles implements UserDetails {
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "security_role")
   List<Role> roles = new ArrayList<>();
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+  List<CleaningPlan> cleaningPlans;
+
+  public void addCleaningPlans(CleaningPlan cleaningPlan){
+    if(cleaningPlans == null){
+      cleaningPlans = new ArrayList<>();
+    }
+    cleaningPlans.add(cleaningPlan);
+  }
 
   public UserWithRoles() {}
 

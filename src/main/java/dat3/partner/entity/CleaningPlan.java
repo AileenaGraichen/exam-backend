@@ -21,16 +21,18 @@ public class CleaningPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    LocalDate date;
-
+    @ManyToOne
+    Unit unit;
     @ManyToOne
     UserWithRoles user;
 
+    LocalDate date;
 
-
-    public CleaningPlan(LocalDate date, UserWithRoles user) {
+    public CleaningPlan(LocalDate date, Unit unit, UserWithRoles user) {
         this.date = date;
+        this.unit = unit;
         this.user = user;
+        unit.addCleaningPlans(this);
+        user.addCleaningPlans(this);
     }
-
 }

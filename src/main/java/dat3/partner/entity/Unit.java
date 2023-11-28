@@ -39,7 +39,7 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
-    @ManyToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.LAZY)
     List<CleaningPlan> cleaningPlans;
 
     public void addCleaningPlans(CleaningPlan cleaningPlan){

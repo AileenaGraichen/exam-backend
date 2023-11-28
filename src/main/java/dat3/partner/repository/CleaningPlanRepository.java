@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CleaningPlanRepository extends JpaRepository<CleaningPlan, Integer> {
+    //getByUserIdAndDate
+    //getByUserId
+    //getByUnitId
 }
