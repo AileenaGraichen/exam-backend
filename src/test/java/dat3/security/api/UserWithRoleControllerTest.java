@@ -75,24 +75,26 @@ class UserWithRoleControllerTest {
     return loginResponse.getToken();
   }
 
-/*  @Test
+  @Test
   void addUsersWithRolesNoRoles() throws Exception {
     UserWithRolesRequest newUserReq = new UserWithRolesRequest("u100", "u100@a.dk", "secret");
     UserWithRoleController.DEFAULT_ROLE_TO_ASSIGN = null;
     mockMvc.perform(post("/api/user-with-role")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + adminToken)
                     .contentType("application/json")
                     .content(objectMapper.writeValueAsString(newUserReq)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.userName").value("u100"))
             .andExpect(jsonPath("$.email").value("u100@a.dk"))
             .andExpect(jsonPath("$.roleNames").isEmpty());
-  }*/
+  }
 
-  /*@Test
+  @Test
   void addUsersWithRoles() throws Exception {
     UserWithRolesRequest newUserReq = new UserWithRolesRequest("u100", "u100@a.dk", "secret");
     UserWithRoleController.DEFAULT_ROLE_TO_ASSIGN = Role.TECH;
     mockMvc.perform(post("/api/user-with-role")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + adminToken)
                     .contentType("application/json")
                     .content(objectMapper.writeValueAsString(newUserReq)))
             .andExpect(status().isOk())
@@ -100,7 +102,7 @@ class UserWithRoleControllerTest {
             .andExpect(jsonPath("$.email").value("u100@a.dk"))
             .andExpect(jsonPath("$.roleNames", hasSize(1)))
             .andExpect(jsonPath("$.roleNames", contains("TECH")));
-  }*/
+  }
 
   @Test
   void addRoleFAilsWhenNotAuthenticatedWithRole() throws Exception {
@@ -130,19 +132,19 @@ class UserWithRoleControllerTest {
 
   @Test
   void removeRoleFailsWhenNotAuthenticatedWithRole() throws Exception {
-    mockMvc.perform(patch("/api/user-with-role/remove-role/u2/user")
+    mockMvc.perform(patch("/api/user-with-role/remove-role/u2/clean")
                     .accept("application/json"))
             .andExpect(status().isUnauthorized());
   }
 
-/*  @Test
+  @Test
   void removeRole() throws Exception {
     mockMvc.perform(patch("/api/user-with-role/remove-role/u1/tech")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + adminToken)
                     .accept("application/json"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.userName").value("u3"))
-            .andExpect(jsonPath("$.roleNames", hasSize(1)))
-            .andExpect(jsonPath("$.roleNames", contains("ADMIN")));
-  }*/
+            .andExpect(jsonPath("$.userName").value("u1"))
+            .andExpect(jsonPath("$.roleNames", hasSize(2)))
+            .andExpect(jsonPath("$.roleNames", contains("CLEAN", "ADMIN")));
+  }
 }
