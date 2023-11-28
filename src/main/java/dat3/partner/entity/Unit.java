@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,6 +39,9 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
+    @OneToMany(mappedBy = "unit")
+    private List<MaintenanceTask> maintenanceTasks;
+
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
@@ -47,6 +53,12 @@ public class Unit {
         owner.addUnit(this);
     }
 
+    public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+        if(maintenanceTasks == null){
+            maintenanceTasks = new ArrayList<>();
+        }
+        maintenanceTasks.add(maintenanceTask);
+    }
 
 }
 

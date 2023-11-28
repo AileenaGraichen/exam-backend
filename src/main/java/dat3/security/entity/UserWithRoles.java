@@ -1,6 +1,7 @@
 package dat3.security.entity;
 
 
+import dat3.partner.entity.MaintenanceTask;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +51,9 @@ public class UserWithRoles implements UserDetails {
   @Column(nullable = false, length = 60)
   String password;
 
+  @OneToMany
+  private List<MaintenanceTask> maintenanceTasks;
+
   private boolean enabled= true;
 
   @CreationTimestamp
@@ -71,6 +75,13 @@ public class UserWithRoles implements UserDetails {
     this.username = user;
     setPassword(password);
     this.email = email;
+  }
+
+  public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+    if(maintenanceTasks == null){
+      maintenanceTasks = new ArrayList<>();
+    }
+    maintenanceTasks.add(maintenanceTask);
   }
 
   public void setPassword(String pw){
