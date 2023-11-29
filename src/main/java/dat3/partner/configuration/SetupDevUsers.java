@@ -1,9 +1,7 @@
 package dat3.partner.configuration;
 
-import dat3.partner.entity.Location;
-import dat3.partner.entity.Owner;
-import dat3.partner.entity.Unit;
-import dat3.partner.entity.UnitStatus;
+import dat3.partner.entity.*;
+import dat3.partner.repository.CleaningPlanRepository;
 import dat3.partner.repository.LocationRepository;
 import dat3.partner.repository.OwnerRepository;
 import dat3.partner.repository.UnitRepository;
@@ -15,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,22 +24,24 @@ public class SetupDevUsers implements ApplicationRunner {
     LocationRepository locationRepository;
     OwnerRepository ownerRepository;
     UnitRepository unitRepository;
+    CleaningPlanRepository cleaningPlanRepository;
     PasswordEncoder passwordEncoder;
     String passwordUsedByAll;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository, CleaningPlanRepository cleaningPlanRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
         this.passwordEncoder = passwordEncoder;
         passwordUsedByAll = "test12";
         this.locationRepository = locationRepository;
         this.unitRepository = unitRepository;
         this.ownerRepository = ownerRepository;
+        this.cleaningPlanRepository = cleaningPlanRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        setupTestData();
         setupUserWithRoleUsers();
+        setupTestData();
     }
 
 
@@ -81,6 +82,27 @@ public class SetupDevUsers implements ApplicationRunner {
         units.add( new Unit("U010", UnitStatus.AVAILABLE, locationRepository.findById(7).get(), ownerRepository.findById(3).get(), "Type10", "KeyCode10"));
         unitRepository.saveAll(units);
 
+        List<CleaningPlan> plans = new ArrayList<>();
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(1).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(2).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(3).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(4).get(), userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(2).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(3).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(4).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(5).get(), userWithRolesRepository.findById("user3").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(3).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(4).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(5).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(6).get(), userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(4).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(5).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(6).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(7).get(), userWithRolesRepository.findById("user3").get()));
+        cleaningPlanRepository.saveAll(plans);
     }
 
 

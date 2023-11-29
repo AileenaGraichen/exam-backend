@@ -1,11 +1,11 @@
 package dat3.partner.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import dat3.partner.entity.Location;
-import dat3.partner.entity.Owner;
-import dat3.partner.entity.Unit;
-import dat3.partner.entity.UnitStatus;
+import dat3.partner.entity.*;
 import lombok.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -23,9 +23,10 @@ public class UnitResponse {
     private String keyCode;
     private int ownerId;
 
+    List<CleaningPlanResponse> cleaningPlans;
+
     //List<UnitTasks>
     //List<MaintenanceTasks>
-    //List<CleaningTask>
 
     public UnitResponse(Unit unit) {
         this.id = unit.getId();
@@ -35,6 +36,7 @@ public class UnitResponse {
         this.type = unit.getType();
         this.keyCode = unit.getKeyCode();
         this.ownerId = unit.getOwner().getId();
+        this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
         //Different lists added here too.
         //TODO Maybe add blob for img
     }
