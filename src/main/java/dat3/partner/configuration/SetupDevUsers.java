@@ -82,16 +82,16 @@ public class SetupDevUsers implements ApplicationRunner {
         unitRepository.saveAll(units);
 
         List<MaintenanceTask> tasks = new ArrayList<>();
-        tasks.add(new MaintenanceTask("Description 1", "Title 1", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user1").get(), unitRepository.findById(1).get()));
-        tasks.add(new MaintenanceTask("Description 2", "Title 2", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user2").get(), unitRepository.findById(2).get()));
-        tasks.add(new MaintenanceTask("Description 3", "Title 3", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user3").get(), unitRepository.findById(3).get()));
-        tasks.add(new MaintenanceTask("Description 4", "Title 4", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user4").get(), unitRepository.findById(4).get()));
-        tasks.add(new MaintenanceTask("Description 5", "Title 5", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unitRepository.findById(5).get()));
-        tasks.add(new MaintenanceTask("Description 6", "Title 6", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user2").get(), unitRepository.findById(6).get()));
-        tasks.add(new MaintenanceTask("Description 7", "Title 7", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unitRepository.findById(7).get()));
-        tasks.add(new MaintenanceTask("Description 8", "Title 8", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unitRepository.findById(8).get()));
-        tasks.add(new MaintenanceTask("Description 9", "Title 9", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unitRepository.findById(9).get()));
-        tasks.add(new MaintenanceTask("Description 10", "Title 10", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unitRepository.findById(10).get()));
+        tasks.add(new MaintenanceTask("Description 1", "Title 1", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user1").get(), unitRepository.findById(1).get(), null));
+        tasks.add(new MaintenanceTask("Description 2", "Title 2", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user2").get(), unitRepository.findById(2).get(), null));
+        tasks.add(new MaintenanceTask("Description 3", "Title 3", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user3").get(), unitRepository.findById(3).get(), null));
+        tasks.add(new MaintenanceTask("Description 4", "Title 4", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user4").get(), unitRepository.findById(4).get(), null));
+        tasks.add(new MaintenanceTask("Description 5", "Title 5", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unitRepository.findById(5).get(), null));
+        tasks.add(new MaintenanceTask("Description 6", "Title 6", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user2").get(), unitRepository.findById(6).get(), null));
+        tasks.add(new MaintenanceTask("Description 7", "Title 7", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unitRepository.findById(7).get(), null));
+        tasks.add(new MaintenanceTask("Description 8", "Title 8", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unitRepository.findById(8).get(), null));
+        tasks.add(new MaintenanceTask("Description 9", "Title 9", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unitRepository.findById(9).get(), null));
+        tasks.add(new MaintenanceTask("Description 10", "Title 10", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unitRepository.findById(10).get(), null));
         maintenanceTaskRepository.saveAll(tasks);
     }
 

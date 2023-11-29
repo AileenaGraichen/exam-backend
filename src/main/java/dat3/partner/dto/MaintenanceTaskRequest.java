@@ -15,6 +15,6 @@ public class MaintenanceTaskRequest {
     private MaintenanceStatus status;
     private MaintenancePriority priority;
     private byte[] image;
-    private int accountId;
+    private String accountUsername;
     private int unitId;
 }
