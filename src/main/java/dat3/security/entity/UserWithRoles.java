@@ -51,7 +51,7 @@ public class UserWithRoles implements UserDetails {
   @Column(nullable = false, length = 60)
   String password;
 
-  @OneToMany
+  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
   private List<MaintenanceTask> maintenanceTasks;
 
   private boolean enabled= true;

@@ -39,7 +39,7 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
-    @OneToMany(mappedBy = "unit")
+    @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
     private List<MaintenanceTask> maintenanceTasks;
 
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
