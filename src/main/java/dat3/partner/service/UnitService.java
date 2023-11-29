@@ -89,4 +89,10 @@ public class UnitService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No unit with this id found"));
         unitRepository.delete(unit);
     }
+
+    public UnitResponse getUnitById(int id) {
+        Unit unit = unitRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No unit with this id found"));
+        return new UnitResponse(unit);
+    }
 }
