@@ -15,7 +15,6 @@ public class UserWithRolesResponse {
     String userName;
     List<String> roleNames;
     String email;
-
     List<CleaningPlanResponse> cleaningPlans;
     public UserWithRolesResponse(UserWithRoles userWithRoles){
         this.userName = userWithRoles.getUsername();
