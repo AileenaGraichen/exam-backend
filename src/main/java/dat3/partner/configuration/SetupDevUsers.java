@@ -1,10 +1,9 @@
 package dat3.partner.configuration;
 
-import dat3.partner.entity.Location;
-import dat3.partner.entity.Owner;
-import dat3.partner.entity.Unit;
-import dat3.partner.entity.UnitStatus;
+import dat3.partner.entity.*;
+import dat3.partner.repository.CleaningPlanRepository;
 import dat3.partner.repository.LocationRepository;
+import dat3.partner.repository.MaintenanceTaskRepository;
 import dat3.partner.repository.OwnerRepository;
 import dat3.partner.repository.UnitRepository;
 import dat3.security.entity.Role;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,22 +25,26 @@ public class SetupDevUsers implements ApplicationRunner {
     LocationRepository locationRepository;
     OwnerRepository ownerRepository;
     UnitRepository unitRepository;
+    MaintenanceTaskRepository maintenanceTaskRepository;
+    CleaningPlanRepository cleaningPlanRepository;
     PasswordEncoder passwordEncoder;
     String passwordUsedByAll;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository, CleaningPlanRepository cleaningPlanRepository, MaintenanceTaskRepository maintenanceTaskRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
+        this.maintenanceTaskRepository = maintenanceTaskRepository;
         this.passwordEncoder = passwordEncoder;
         passwordUsedByAll = "test12";
         this.locationRepository = locationRepository;
         this.unitRepository = unitRepository;
         this.ownerRepository = ownerRepository;
+        this.cleaningPlanRepository = cleaningPlanRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        setupTestData();
         setupUserWithRoleUsers();
+        setupTestData();
     }
 
 
@@ -80,6 +84,42 @@ public class SetupDevUsers implements ApplicationRunner {
         units.add( new Unit("U009", UnitStatus.UNAVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type9", "KeyCode9"));
         units.add( new Unit("U010", UnitStatus.AVAILABLE, locationRepository.findById(7).get(), ownerRepository.findById(3).get(), "Type10", "KeyCode10"));
         unitRepository.saveAll(units);
+
+
+        List<MaintenanceTask> tasks = new ArrayList<>();
+        tasks.add(new MaintenanceTask("Description 1", "Title 1", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user1").get(), unitRepository.findById(1).get(), null));
+        tasks.add(new MaintenanceTask("Description 2", "Title 2", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user2").get(), unitRepository.findById(2).get(), null));
+        tasks.add(new MaintenanceTask("Description 3", "Title 3", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user3").get(), unitRepository.findById(3).get(), null));
+        tasks.add(new MaintenanceTask("Description 4", "Title 4", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user4").get(), unitRepository.findById(4).get(), null));
+        tasks.add(new MaintenanceTask("Description 5", "Title 5", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unitRepository.findById(5).get(), null));
+        tasks.add(new MaintenanceTask("Description 6", "Title 6", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user2").get(), unitRepository.findById(6).get(), null));
+        tasks.add(new MaintenanceTask("Description 7", "Title 7", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unitRepository.findById(7).get(), null));
+        tasks.add(new MaintenanceTask("Description 8", "Title 8", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unitRepository.findById(8).get(), null));
+        tasks.add(new MaintenanceTask("Description 9", "Title 9", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unitRepository.findById(9).get(), null));
+        tasks.add(new MaintenanceTask("Description 10", "Title 10", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unitRepository.findById(10).get(), null));
+        maintenanceTaskRepository.saveAll(tasks);
+
+        List<CleaningPlan> plans = new ArrayList<>();
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(1).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(2).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(3).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unitRepository.findById(4).get(), userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(2).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(3).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(4).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unitRepository.findById(5).get(), userWithRolesRepository.findById("user3").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(3).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(4).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(5).get(), userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unitRepository.findById(6).get(), userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(4).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(5).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(6).get(), userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unitRepository.findById(7).get(), userWithRolesRepository.findById("user3").get()));
+        cleaningPlanRepository.saveAll(plans);
 
     }
 

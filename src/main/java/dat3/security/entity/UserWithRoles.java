@@ -1,6 +1,8 @@
 package dat3.security.entity;
 
 
+import dat3.partner.entity.MaintenanceTask;
+import dat3.partner.entity.CleaningPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +52,9 @@ public class UserWithRoles implements UserDetails {
   @Column(nullable = false, length = 60)
   String password;
 
+  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+  private List<MaintenanceTask> maintenanceTasks;
+
   private boolean enabled= true;
 
   @CreationTimestamp
@@ -64,6 +69,16 @@ public class UserWithRoles implements UserDetails {
   @CollectionTable(name = "security_role")
   List<Role> roles = new ArrayList<>();
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+  List<CleaningPlan> cleaningPlans;
+
+  public void addCleaningPlans(CleaningPlan cleaningPlan){
+    if(cleaningPlans == null){
+      cleaningPlans = new ArrayList<>();
+    }
+    cleaningPlans.add(cleaningPlan);
+  }
+
   public UserWithRoles() {}
 
 
@@ -71,6 +86,13 @@ public class UserWithRoles implements UserDetails {
     this.username = user;
     setPassword(password);
     this.email = email;
+  }
+
+  public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+    if(maintenanceTasks == null){
+      maintenanceTasks = new ArrayList<>();
+    }
+    maintenanceTasks.add(maintenanceTask);
   }
 
   public void setPassword(String pw){
