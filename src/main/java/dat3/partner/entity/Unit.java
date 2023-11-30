@@ -42,6 +42,16 @@ public class Unit {
     @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
     private List<MaintenanceTask> maintenanceTasks;
 
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    List<CleaningPlan> cleaningPlans;
+
+    public void addCleaningPlans(CleaningPlan cleaningPlan){
+        if(cleaningPlans == null){
+            cleaningPlans = new ArrayList<>();
+        }
+        cleaningPlans.add(cleaningPlan);
+    }
+
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
