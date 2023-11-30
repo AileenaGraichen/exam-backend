@@ -11,6 +11,7 @@ import dat3.partner.repository.UnitRepository;
 import dat3.security.entity.UserWithRoles;
 import dat3.security.repository.UserWithRolesRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -52,17 +53,24 @@ public class CleaningPlanService {
         return cleaningPlanRepository.getCleaningPlansByUnit_Id(unitId).stream().map(cleaningPlan -> new CleaningPlanResponse(cleaningPlan)).toList();
     }
 
-    public CleaningPlanResponse addCleaningPlan(List<CleaningPlanRequest> body) {
+    public void addCleaningPlan(List<CleaningPlanRequest> body) {
+        //Iterates through list of requests, and adds them to database if it does not exist already.
         for(CleaningPlanRequest cp : body){
             if(!cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(cp.getDate(), cp.getUnitId(), cp.getUserName())){
                 Unit newUnit = unitRepository.findById(cp.getUnitId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit not found"));
                 UserWithRoles newUser = userWithRolesRepository.findById(cp.getUserName()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
                 cleaningPlanRepository.save(new CleaningPlan(cp.getDate(), newUnit, newUser));
             }
-
         }
+    }
 
-
+    public void deleteCleaningPlan(List<CleaningPlanRequest> body) {
+        for(CleaningPlanRequest cp : body){
+            if(cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(cp.getDate(), cp.getUnitId(), cp.getUserName())){
+                CleaningPlan deletePlan = cleaningPlanRepository.getCleaningPlanByDateAndUser_UsernameAndUnitId(cp.getDate(), cp.getUserName(), cp.getUnitId());
+                cleaningPlanRepository.delete(deletePlan);
+            }
+        }
     }
 
 //    public CleaningPlanResponse addCleaningPlan(CleaningPlanRequest body) {
