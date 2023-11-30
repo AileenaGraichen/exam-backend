@@ -40,10 +40,10 @@ public class Unit {
     private Owner owner;
 
     @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
-    private List<MaintenanceTask> maintenanceTasks = new ArrayList<>();
+    private List<MaintenanceTask> maintenanceTasks;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-    List<CleaningPlan> cleaningPlans = new ArrayList<>();
+    List<CleaningPlan> cleaningPlans;
 
     public void addCleaningPlans(CleaningPlan cleaningPlan){
         if(cleaningPlans == null){

@@ -37,7 +37,7 @@ public class UnitResponse {
         this.keyCode = unit.getKeyCode();
         this.ownerId = unit.getOwner().getId();
         this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
-        this.maintenanceTasks = unit.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
+        //this.maintenanceTasks = unit.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
 
         //Different lists added here too.
         //TODO add blob for img

@@ -67,10 +67,10 @@ public class UserWithRoles implements UserDetails {
   List<Role> roles = new ArrayList<>();
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-  private List<CleaningPlan> cleaningPlans = new ArrayList<>();
+  private List<CleaningPlan> cleaningPlans;
 
   @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-  private List<MaintenanceTask> maintenanceTasks = new ArrayList<>();
+  private List<MaintenanceTask> maintenanceTasks;
 
   public UserWithRoles() {}
 
