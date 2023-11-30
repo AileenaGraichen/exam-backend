@@ -56,6 +56,7 @@ public class CleaningPlanService {
     public void addCleaningPlan(List<CleaningPlanRequest> body) {
         //Iterates through list of requests, and adds them to database if it does not exist already.
         for(CleaningPlanRequest cp : body){
+            System.out.println(cp.getUnitId());
             if(!cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(cp.getDate(), cp.getUnitId(), cp.getUserName())){
                 Unit newUnit = unitRepository.findById(cp.getUnitId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit not found"));
                 UserWithRoles newUser = userWithRolesRepository.findById(cp.getUserName()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
