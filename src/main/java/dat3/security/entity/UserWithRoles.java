@@ -52,9 +52,6 @@ public class UserWithRoles implements UserDetails {
   @Column(nullable = false, length = 60)
   String password;
 
-  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-  private List<MaintenanceTask> maintenanceTasks;
-
   private boolean enabled= true;
 
   @CreationTimestamp
@@ -70,17 +67,12 @@ public class UserWithRoles implements UserDetails {
   List<Role> roles = new ArrayList<>();
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-  List<CleaningPlan> cleaningPlans;
+  private List<CleaningPlan> cleaningPlans;
 
-  public void addCleaningPlans(CleaningPlan cleaningPlan){
-    if(cleaningPlans == null){
-      cleaningPlans = new ArrayList<>();
-    }
-    cleaningPlans.add(cleaningPlan);
-  }
+  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+  private List<MaintenanceTask> maintenanceTasks;
 
   public UserWithRoles() {}
-
 
   public UserWithRoles(String user, String password, String email){
     this.username = user;
@@ -93,6 +85,13 @@ public class UserWithRoles implements UserDetails {
       maintenanceTasks = new ArrayList<>();
     }
     maintenanceTasks.add(maintenanceTask);
+  }
+
+  public void addCleaningPlans(CleaningPlan cleaningPlan){
+    if(cleaningPlans == null){
+      cleaningPlans = new ArrayList<>();
+    }
+    cleaningPlans.add(cleaningPlan);
   }
 
   public void setPassword(String pw){

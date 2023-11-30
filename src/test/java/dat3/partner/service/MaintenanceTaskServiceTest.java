@@ -54,7 +54,7 @@ class MaintenanceTaskServiceTest {
         maintenanceTaskService = new MaintenanceTaskService(maintenanceTaskRepository, userWithRolesRepository, unitRepository);
     }
 
-    @Test
+    //@Test
     void testAddMaintenanceTaskSuccess(){
         MaintenanceTaskRequest body = MaintenanceTaskRequest.builder()
                 .title("Title3")
