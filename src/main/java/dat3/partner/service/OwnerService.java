@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OwnerService {
     OwnerRepository ownerRepository;
@@ -34,10 +37,22 @@ public class OwnerService {
         return new OwnerResponse(owner);
     }
 
-   /* public Page<OwnerResponse> getOwnersByName(Pageable pageable, String name) {
-        Page<Owner> owners = ownerRepository.findByFirstNameContainingOrLastNameContainingIgnoreCase(name, pageable);
-        return owners.map(owner -> new OwnerResponse(owner));
-    }*/
+    public List<OwnerResponse> getOwnersBySearch(String search) {
+        List<Owner> owners = new ArrayList<>();
+        if(search == null && search.isEmpty()){
+            owners = ownerRepository.findAll();
+        } else if(containsNumbers(search)){
+            owners = ownerRepository.findOwnersByUnitNumber(search);
+        }else if(owners.isEmpty()){
+            owners = ownerRepository.findAllBySearchValueIgnoreCase(search);
+        }
+
+        if(owners.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No owner found for search criteria");
+        }
+
+        return owners.stream().map(owner -> new OwnerResponse(owner)).toList();
+    }
 
     public OwnerResponse addOwner(OwnerRequest body) {
         if(ownerRepository.existsOwnerByMobile(body.getMobile())){
@@ -73,5 +88,10 @@ public class OwnerService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner with that id does not exist");
         }
+    }
+
+    private boolean containsNumbers(String input) {
+        // Check if the input string contains numbers using a regular expression
+        return input.matches(".*\\d+.*");
     }
 }
