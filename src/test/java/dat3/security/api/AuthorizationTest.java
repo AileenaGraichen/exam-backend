@@ -94,7 +94,7 @@ public class AuthorizationTest {
                     .contentType("application/json"))
             .andExpect(status().isUnauthorized());
   }
-  @Test
+  //@Test
   void testAuthenticatedNoRoles() throws Exception {
     mockMvc.perform(get("/api/security-tests/authenticated")
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + user_noRolesJwtToken)

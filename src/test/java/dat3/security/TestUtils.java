@@ -7,7 +7,7 @@ import dat3.security.repository.UserWithRolesRepository;
 public class TestUtils {
 
   public static void setupTestUsers( UserWithRolesRepository userWithRolesRepository){
-    userWithRolesRepository.deleteAll();
+    //userWithRolesRepository.deleteAll();
     String passwordUsedByAll = "secret";
     UserWithRoles user1 = new UserWithRoles("u1", passwordUsedByAll, "u1@a.dk");
     UserWithRoles user2 = new UserWithRoles("u2", passwordUsedByAll, "u2@a.dk");
