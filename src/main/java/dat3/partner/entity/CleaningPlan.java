@@ -22,11 +22,11 @@ public class CleaningPlan {
     private int id;
 
     @ManyToOne
-    Unit unit;
+    private Unit unit;
     @ManyToOne
-    UserWithRoles user;
+    private UserWithRoles user;
 
-    LocalDate date;
+    private LocalDate date;
 
     public CleaningPlan(LocalDate date, Unit unit, UserWithRoles user) {
         this.date = date;

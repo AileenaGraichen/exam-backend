@@ -26,13 +26,16 @@ public class OwnerRepositoryTest {
     @Autowired
     LocationRepository locationRepository;
 
+    Location l;
+    Owner o1, o2, o3;
+    Unit u;
     @BeforeEach
     void setup(){
-        ownerRepository.save(new Owner("Simon", "Hansen", "studOne@kea.dk", "+4520395042"));
-        ownerRepository.save(new Owner("Hans", "Jensen", "studTwo@kea.dk", "+4554893498"));
-        ownerRepository.save(new Owner("Seb", "Jensen", "studThree@kea.dk", "+4509242234"));
-        locationRepository.save(new Location("DueOdde", "BonBonLandsvej"));
-        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type1", "KeyCode1"));
+        o1 = ownerRepository.save(new Owner("Simon", "Hansen", "studOne@kea.dk", "+4520395042"));
+        o2 = ownerRepository.save(new Owner("Hans", "Jensen", "studTwo@kea.dk", "+4554893498"));
+        o3 = ownerRepository.save(new Owner("Seb", "Jensen", "studThree@kea.dk", "+4509242234"));
+        l = locationRepository.save(new Location("DueOdde", "BonBonLandsvej"));
+        u = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l, o1, "Type1", "KeyCode1"));
 
     }
 
