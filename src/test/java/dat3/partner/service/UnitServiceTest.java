@@ -43,7 +43,7 @@ public class UnitServiceTest {
         unitService = new UnitService(unitRepository, locationRepository, ownerRepository);
     }
 
-    //@Test
+    @Test
     void testAddUnitSuccess(){
         UnitRequest body = UnitRequest.builder()
                 .unitNumber("U23")

@@ -36,7 +36,9 @@ public class UnitResponse {
         this.type = unit.getType();
         this.keyCode = unit.getKeyCode();
         this.ownerId = unit.getOwner().getId();
-        this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
+        if(unit.getCleaningPlans() != null) {
+            this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
+        }
         //Different lists added here too.
         //TODO Maybe add blob for img
     }
