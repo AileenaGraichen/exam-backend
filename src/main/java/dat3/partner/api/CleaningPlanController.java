@@ -48,9 +48,6 @@ public class CleaningPlanController {
     public void addCleaningPlan(@RequestBody List<CleaningPlanRequest> body){
         service.addCleaningPlan(body);
     }
-    //Add
-    //edit
-    //delete
     @DeleteMapping
     public void deleteCleaningPlans(@RequestBody List<CleaningPlanRequest> body){
         service.deleteCleaningPlan(body);
