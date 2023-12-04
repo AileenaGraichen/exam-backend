@@ -44,11 +44,12 @@ public class CleaningPlanController {
 
     //Get all by date too? Hvis de gerne vil slå alt rengøring op for idag fx. Og ikke kun på specifikke brugere.
 
-//    @PostMapping
-//    public CleaningPlanResponse addCleaningPlan(@RequestBody CleaningPlanRequest body){
-//        return service.addCleaningPlan(body);
-//    }
-    //Add
-    //edit
-    //delete
+    @PostMapping
+    public void addCleaningPlan(@RequestBody List<CleaningPlanRequest> body){
+        service.addCleaningPlan(body);
+    }
+    @DeleteMapping
+    public void deleteCleaningPlans(@RequestBody List<CleaningPlanRequest> body){
+        service.deleteCleaningPlan(body);
+    }
 }

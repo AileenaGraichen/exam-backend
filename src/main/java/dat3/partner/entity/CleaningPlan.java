@@ -21,9 +21,9 @@ public class CleaningPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private Unit unit;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     private UserWithRoles user;
 
     private LocalDate date;

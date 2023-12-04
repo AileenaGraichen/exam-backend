@@ -3,9 +3,17 @@ package dat3.partner.service;
 import dat3.partner.api.CleaningPlanController;
 import dat3.partner.dto.CleaningPlanRequest;
 import dat3.partner.dto.CleaningPlanResponse;
+import dat3.partner.dto.UnitResponse;
+import dat3.partner.entity.CleaningPlan;
+import dat3.partner.entity.Unit;
 import dat3.partner.repository.CleaningPlanRepository;
+import dat3.partner.repository.UnitRepository;
+import dat3.security.entity.UserWithRoles;
+import dat3.security.repository.UserWithRolesRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -14,9 +22,14 @@ import java.util.List;
 @Service
 public class CleaningPlanService {
     CleaningPlanRepository cleaningPlanRepository;
+    UnitRepository unitRepository;
+    UserWithRolesRepository userWithRolesRepository;
 
-    public CleaningPlanService(CleaningPlanRepository cleaningPlanRepository) {
+    public CleaningPlanService(CleaningPlanRepository cleaningPlanRepository, UnitRepository unitRepository, UserWithRolesRepository userWithRolesRepository)
+    {
         this.cleaningPlanRepository = cleaningPlanRepository;
+        this.unitRepository = unitRepository;
+        this.userWithRolesRepository = userWithRolesRepository;
     }
 
     public List<CleaningPlanResponse> getAllPlans() {
@@ -41,22 +54,26 @@ public class CleaningPlanService {
         return cleaningPlanRepository.getCleaningPlansByUnit_Id(unitId).stream().map(cleaningPlan -> new CleaningPlanResponse(cleaningPlan)).toList();
     }
 
-//    public CleaningPlanResponse addCleaningPlan(CleaningPlanRequest body) {
-//        if(cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(body.getDate(), body.getUnitId(), body.getUserName())){
-//
-//        }
-//
-//    }
+    public void addCleaningPlan(List<CleaningPlanRequest> body) {
+        //Iterates through list of requests, and adds them to database if it does not exist already.
+        for(CleaningPlanRequest cp : body){
+            if(!cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(cp.getDate(), cp.getUnitId(), cp.getUserName())){
+                Unit newUnit = unitRepository.findById(cp.getUnitId()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Unit not found"));
+                UserWithRoles newUser = userWithRolesRepository.findById(cp.getUserName()).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found"));
+                cleaningPlanRepository.save(new CleaningPlan(cp.getDate(), newUnit, newUser));
+            }
+        }
+    }
 
-
-    //GetAll
-    //get by username and date
-    //get by username
-    //get by unit id
-
-    //Add
-    //Edit
-    //Delete
+    @Transactional
+    public void deleteCleaningPlan(List<CleaningPlanRequest> body) {
+        for(CleaningPlanRequest cp : body){
+            if(cleaningPlanRepository.existsCleaningPlanByDateAndUnit_IdAndUser_Username(cp.getDate(), cp.getUnitId(), cp.getUserName())){
+                CleaningPlan deletePlan = cleaningPlanRepository.getCleaningPlanByDateAndUser_UsernameAndUnitId(cp.getDate(), cp.getUserName(), cp.getUnitId());
+                cleaningPlanRepository.delete(deletePlan);
+            }
+        }
+    }
 
 
 }
