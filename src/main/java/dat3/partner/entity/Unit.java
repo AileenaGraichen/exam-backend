@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,6 +39,12 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
+    @OneToMany(mappedBy = "unit",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    private List<MaintenanceTask> maintenanceTasks;
+
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
+    List<CleaningPlan> cleaningPlans;
+
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
@@ -47,6 +56,19 @@ public class Unit {
         owner.addUnit(this);
     }
 
+    public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+        if(maintenanceTasks == null){
+            maintenanceTasks = new ArrayList<>();
+        }
+        maintenanceTasks.add(maintenanceTask);
+    }
+
+    public void addCleaningPlans(CleaningPlan cleaningPlan){
+        if(cleaningPlans == null){
+            cleaningPlans = new ArrayList<>();
+        }
+        cleaningPlans.add(cleaningPlan);
+    }
 
 }
 
