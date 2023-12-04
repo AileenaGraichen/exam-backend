@@ -1,10 +1,9 @@
 package dat3.partner.configuration;
 
-import dat3.partner.entity.Location;
-import dat3.partner.entity.Owner;
-import dat3.partner.entity.Unit;
-import dat3.partner.entity.UnitStatus;
+import dat3.partner.entity.*;
+import dat3.partner.repository.CleaningPlanRepository;
 import dat3.partner.repository.LocationRepository;
+import dat3.partner.repository.MaintenanceTaskRepository;
 import dat3.partner.repository.OwnerRepository;
 import dat3.partner.repository.UnitRepository;
 import dat3.security.entity.Role;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import dat3.security.repository.UserWithRolesRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,61 +25,98 @@ public class SetupDevUsers implements ApplicationRunner {
     LocationRepository locationRepository;
     OwnerRepository ownerRepository;
     UnitRepository unitRepository;
+    MaintenanceTaskRepository maintenanceTaskRepository;
+    CleaningPlanRepository cleaningPlanRepository;
     PasswordEncoder passwordEncoder;
     String passwordUsedByAll;
 
-    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository) {
+    public SetupDevUsers(UserWithRolesRepository userWithRolesRepository, PasswordEncoder passwordEncoder, LocationRepository locationRepository, UnitRepository unitRepository, OwnerRepository ownerRepository, CleaningPlanRepository cleaningPlanRepository, MaintenanceTaskRepository maintenanceTaskRepository) {
         this.userWithRolesRepository = userWithRolesRepository;
+        this.maintenanceTaskRepository = maintenanceTaskRepository;
         this.passwordEncoder = passwordEncoder;
         passwordUsedByAll = "test12";
         this.locationRepository = locationRepository;
         this.unitRepository = unitRepository;
         this.ownerRepository = ownerRepository;
+        this.cleaningPlanRepository = cleaningPlanRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        setupTestData();
         setupUserWithRoleUsers();
+        setupTestData();
     }
 
 
     private void setupTestData(){
-        List<Location> locations = new ArrayList<>();
-        locations.add(new Location("DueOdde", "BonBonLandsvej"));
-        locations.add(new Location("Bornholm Art Museum", "Gudhjemvej, 25, 3760 Gudhjem"));
-        locations.add(new Location("Dueodde Beach", "Dueoddevej, 3730 Nexø"));
-        locations.add(new Location("Helligdomsklipperne", "Rø Plantagevej, 3770 Allinge"));
-        locations.add(new Location("Osterlars Church", "Rønnevej, 12, 3760 Gudhjem"));
-        locations.add(new Location("Hammerknuden, Vang Granite Quarry", "Kystvejen, 3770 Allinge"));
-        locations.add(new Location("Ekkodalen", "Ekkodalsvej, 3770 Allinge"));
-        locations.add(new Location("Almindingen Forest", "Almindingen, 3770 Allinge"));
-        locations.add(new Location("Nexø Old Smokehouse", "Sdr. Strandvej, 3730 Nexø"));
-        locations.add(new Location("Hammershus Castle", "Hammershusvej, 3, 3770 Allinge"));
-        locationRepository.saveAll(locations);
+        Location location1 = locationRepository.save(new Location("Dueodde Badehotel", "BonBonLandsvej"));
+        Location location2 = locationRepository.save(new Location("Østersøen", "Gudhjemvej, 25, 3760 Gudhjem"));
+        Location location3 = locationRepository.save(new Location("Balka Ferielejligheder", "Dueoddevej, 3730 Nexø"));
+        Location location4 = locationRepository.save(new Location("Årsdale Søpark", "Rø Plantagevej, 3770 Allinge"));
+        Location location5 = locationRepository.save(new Location("Boderne Nr. 1", "Rønnevej, 12, 3760 Gudhjem"));
+        Location location6 = locationRepository.save(new Location("Bageriet", "Kystvejen, 3770 Allinge"));
+        Location location7 = locationRepository.save(new Location("Møllegården", "Ekkodalsvej, 3770 Allinge"));
+        Location location8 = locationRepository.save(new Location("Munken", "Almindingen, 3770 Allinge"));
+        Location location9 = locationRepository.save(new Location("Byfogedhuset", "Sdr. Strandvej, 3730 Nexø"));
+        Location location10 = locationRepository.save(new Location("Svaneke Sommerhuse", "Hammershusvej, 3, 3770 Allinge"));
 
         List<Owner> owners = new ArrayList<>();
-        owners.add(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
-        owners.add(new Owner("Jane", "Smith", "jane.smith@example.com", "9876543210"));
-        owners.add(new Owner("Alice", "Johnson", "alice.johnson@example.com", "5678901234"));
-        owners.add(new Owner("Bob", "Williams", "bob.williams@example.com", "6789012345"));
-        owners.add(new Owner("Eva", "Brown", "eva.brown@example.com", "8901234567"));
-        owners.add(new Owner("David", "Miller", "david.miller@example.com", "3456789012"));
-        ownerRepository.saveAll(owners);
+        Owner owner1 = ownerRepository.save(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
+        Owner owner2 = ownerRepository.save(new Owner("Jane", "Smith", "jane.smith@example.com", "9876543210"));
+        Owner owner3 = ownerRepository.save(new Owner("Alice", "Johnson", "alice.johnson@example.com", "5678901234"));
+        Owner owner4 = ownerRepository.save(new Owner("Bob", "Williams", "bob.williams@example.com", "6789012345"));
+        Owner owner5 = ownerRepository.save(new Owner("Eva", "Brown", "eva.brown@example.com", "8901234567"));
+        Owner owner6 = ownerRepository.save(new Owner("David", "Miller", "david.miller@example.com", "3456789012"));
 
 
         List<Unit> units = new ArrayList<>();
-        units.add(new Unit("U001", UnitStatus.AVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type1", "KeyCode1"));
-        units.add( new Unit("U002", UnitStatus.IN_PROGRESS, locationRepository.findById(2).get(), ownerRepository.findById(2).get(), "Type2", "KeyCode2"));
-        units.add( new Unit("U003", UnitStatus.UNAVAILABLE, locationRepository.findById(3).get(), ownerRepository.findById(4).get(), "Type3", "KeyCode3"));
-        units.add( new Unit("U004", UnitStatus.AVAILABLE, locationRepository.findById(4).get(), ownerRepository.findById(3).get(), "Type4", "KeyCode4"));
-        units.add( new Unit("U005", UnitStatus.IN_PROGRESS, locationRepository.findById(5).get(), ownerRepository.findById(5).get(), "Type5", "KeyCode5"));
-        units.add( new Unit("U006", UnitStatus.UNAVAILABLE, locationRepository.findById(6).get(), ownerRepository.findById(6).get(), "Type6", "KeyCode6"));
-        units.add( new Unit("U007", UnitStatus.AVAILABLE, locationRepository.findById(2).get(), ownerRepository.findById(4).get(), "Type7", "KeyCode7"));
-        units.add( new Unit("U008", UnitStatus.IN_PROGRESS, locationRepository.findById(1).get(), ownerRepository.findById(3).get(), "Type8", "KeyCode8"));
-        units.add( new Unit("U009", UnitStatus.UNAVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type9", "KeyCode9"));
-        units.add( new Unit("U010", UnitStatus.AVAILABLE, locationRepository.findById(7).get(), ownerRepository.findById(3).get(), "Type10", "KeyCode10"));
-        unitRepository.saveAll(units);
+        Unit unit1 = unitRepository.save(new Unit("101", UnitStatus.AVAILABLE, location1, owner1, "Lejlighed 2 pers.", "Reception"));
+        Unit unit2 = unitRepository.save( new Unit("115", UnitStatus.IN_PROGRESS, location1, owner2, "Lejlighed 2-4 pers.", "Reception"));
+        Unit unit3 = unitRepository.save( new Unit("7", UnitStatus.UNAVAILABLE, location2, owner3, "4-6 pers. m/havudsigt", "På bordet"));
+        Unit unit4 = unitRepository.save( new Unit("19", UnitStatus.AVAILABLE, location2, owner4, "4-6 pers. m/havudsigt", "På bordet"));
+        Unit unit5 = unitRepository.save( new Unit("3", UnitStatus.IN_PROGRESS, location3, owner6, "Lejlighed 2 pers.", "På bordet"));
+        Unit unit6 = unitRepository.save( new Unit("6", UnitStatus.UNAVAILABLE, location4, owner5, "Standard 2-4 pers.", "På bordet"));
+        Unit unit7 = unitRepository.save( new Unit("9", UnitStatus.AVAILABLE, location4, owner6, "2-4 pers. m/havudsigt", "På bordet"));
+        Unit unit8 = unitRepository.save( new Unit("8", UnitStatus.IN_PROGRESS, location5, owner2, "Lejlighed 2 pers. panorama", "3715"));
+        Unit unit9 = unitRepository.save( new Unit("10", UnitStatus.UNAVAILABLE, location5, owner4, "Lejlighed 2 pers. Standard", "3748"));
+        Unit unit10 = unitRepository.save( new Unit("8", UnitStatus.AVAILABLE, location8, owner1, "2-4 pers. - 58m2", "På bordet"));
+
+
+
+        List<MaintenanceTask> tasks = new ArrayList<>();
+        tasks.add(new MaintenanceTask("Vindue i badeværelse revnet", "Vindue revnet", MaintenanceStatus.NOT_STARTED, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unit1, null));
+        tasks.add(new MaintenanceTask("Spisebordsstol er væk", "Mangler stol", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit2, null));
+        tasks.add(new MaintenanceTask("Bordben knækket på sofabord", "Bordben knækket", MaintenanceStatus.DONE, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unit3, null));
+        tasks.add(new MaintenanceTask("Vandhane i køkkenet drypper", "Vandhane drypper", MaintenanceStatus.NOT_STARTED, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unit4, null));
+        tasks.add(new MaintenanceTask("Toilettet kan ikke skylde ud", "Stoppet toilet", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.HIGH, userWithRolesRepository.findById("user1").get(), unit5, null));
+        tasks.add(new MaintenanceTask("Toiletbræt trænger til udskriftning", "Toiletbræt", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user2").get(), unit6, null));
+        tasks.add(new MaintenanceTask("Stor plet på højre side af sofa", "Plet på sofa", MaintenanceStatus.NOT_STARTED, MaintenancePriority.LOW, userWithRolesRepository.findById("user3").get(), unit7, null));
+        tasks.add(new MaintenanceTask("Der er kun en kop", "Manger service", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unit8, null));
+        tasks.add(new MaintenanceTask("Døren til soveværelse er svær at lukke", "Dør binder", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unit9, null));
+        tasks.add(new MaintenanceTask("Manglende internet forbindelse", "Internet forbindelse", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit10, null));
+        maintenanceTaskRepository.saveAll(tasks);
+
+        List<CleaningPlan> plans = new ArrayList<>();
+        plans.add(new CleaningPlan(LocalDate.now(), unit1, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unit2, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unit3, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now(), unit4, userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unit2, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unit3, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unit4, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(2), unit5, userWithRolesRepository.findById("user3").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unit2, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unit5, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unit6, userWithRolesRepository.findById("user1").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(4), unit7, userWithRolesRepository.findById("user1").get()));
+
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit4, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit5, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit6, userWithRolesRepository.findById("user3").get()));
+        plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit7, userWithRolesRepository.findById("user3").get()));
+        cleaningPlanRepository.saveAll(plans);
 
     }
 

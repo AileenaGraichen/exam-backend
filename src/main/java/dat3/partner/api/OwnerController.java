@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/owner")
 public class OwnerController {
@@ -26,11 +28,11 @@ public class OwnerController {
         return ownerService.getOwnerById(id);
     }
 
-
-    /*@GetMapping("/byname")
-    public Page<OwnerResponse> getOwnerByName(Pageable pageable, @RequestParam(name="name", required = false) String name){
-        return ownerService.getOwnersByName(pageable, name);
-    }*/
+    @GetMapping("search/{search}")
+    public List<OwnerResponse> getOwnersBySearch(@PathVariable(required = false) String search){
+        List<OwnerResponse> ownerResponses = ownerService.getOwnersBySearch(search);
+        return ownerResponses;
+    }
 
     @GetMapping("/byMobile")
     public OwnerResponse getGetOwnerByMobile(Pageable pageable, @RequestParam(name="mobile", required = false) String mobile){
