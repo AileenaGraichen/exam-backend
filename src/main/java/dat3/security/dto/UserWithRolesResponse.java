@@ -22,8 +22,7 @@ public class UserWithRolesResponse {
         this.userName = userWithRoles.getUsername();
         this.roleNames = userWithRoles.getRoles().stream().map(role -> role.toString()).collect(Collectors.toList());
         this.email = userWithRoles.getEmail();
-
-        //this.cleaningPlans = userWithRoles.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
+        this.cleaningPlans = userWithRoles.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
         //this.maintenanceTasks = userWithRoles.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
     }
 
