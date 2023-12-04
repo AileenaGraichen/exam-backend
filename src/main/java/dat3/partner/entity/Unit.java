@@ -39,6 +39,9 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
+    @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
+    private List<MaintenanceTask> maintenanceTasks;
+
     @OneToMany(mappedBy = "unit", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
     List<CleaningPlan> cleaningPlans;
 
@@ -60,6 +63,12 @@ public class Unit {
         owner.addUnit(this);
     }
 
+    public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+        if(maintenanceTasks == null){
+            maintenanceTasks = new ArrayList<>();
+        }
+        maintenanceTasks.add(maintenanceTask);
+    }
 
 }
 

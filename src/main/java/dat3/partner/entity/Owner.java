@@ -19,9 +19,9 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="fname")
+    @Column(name = "fname")
     private String firstName;
-    @Column(name="lname")
+    @Column(name = "lname")
     private String lastName;
     private String email;
     private String mobile;
