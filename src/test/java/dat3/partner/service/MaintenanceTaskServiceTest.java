@@ -66,6 +66,6 @@ class MaintenanceTaskServiceTest {
                 .image(null).build();
         MaintenanceTaskResponse response = maintenanceTaskService.createMaintenanceTask(body);
         assertEquals("Description3", response.getDescription());
-        assertEquals(unit1.getId(), response.getUnit().getId());
+        assertEquals(unit1.getId(), response.getUnitId());
     }
 }
