@@ -66,11 +66,11 @@ public class UserWithRoles implements UserDetails {
   @CollectionTable(name = "security_role")
   List<Role> roles = new ArrayList<>();
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
-  private List<CleaningPlan> cleaningPlans;
+  @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+  private List<CleaningPlan> cleaningPlans = new ArrayList<>();
 
-  @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-  private List<MaintenanceTask> maintenanceTasks;
+  @OneToMany(mappedBy = "account",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private List<MaintenanceTask> maintenanceTasks = new ArrayList<>();
 
   public UserWithRoles() {}
 
@@ -81,16 +81,10 @@ public class UserWithRoles implements UserDetails {
   }
 
   public void addMaintenanceTask(MaintenanceTask maintenanceTask){
-    if(maintenanceTasks == null){
-      maintenanceTasks = new ArrayList<>();
-    }
     maintenanceTasks.add(maintenanceTask);
   }
 
   public void addCleaningPlans(CleaningPlan cleaningPlan){
-    if(cleaningPlans == null){
-      cleaningPlans = new ArrayList<>();
-    }
     cleaningPlans.add(cleaningPlan);
   }
 

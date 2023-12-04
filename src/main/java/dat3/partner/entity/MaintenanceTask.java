@@ -36,6 +36,7 @@ public class MaintenanceTask {
     private MaintenancePriority priority;
     @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
+
     @ManyToOne
     private UserWithRoles account;
     @ManyToOne

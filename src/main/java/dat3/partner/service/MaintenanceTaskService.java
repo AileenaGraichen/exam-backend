@@ -35,6 +35,11 @@ public class MaintenanceTaskService {
         return tasks.map(task -> new MaintenanceTaskResponse(task));
     }
 
+    public List<MaintenanceTaskResponse> getTasksByLocationId(int id){
+        List<MaintenanceTask> tasks = repository.findTasksByLocationId(id);
+        return tasks.stream().map(task -> new MaintenanceTaskResponse(task)).toList();
+    }
+
     public MaintenanceTaskResponse createMaintenanceTask(MaintenanceTaskRequest body){
         UserWithRoles account = userWithRolesRepository.findById(body.getAccountUsername()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No account with this id found"));

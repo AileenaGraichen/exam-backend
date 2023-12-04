@@ -29,23 +29,23 @@ public class MaintenanceTaskController {
         return service.getAllTasks(pageable);
     }
 
-    /*@PostMapping
-    public MaintenanceTaskResponse createMaintenanceTask(@RequestBody MaintenanceTaskRequest body){
-        System.out.println(body.getImage());
-        return service.createMaintenanceTask(body);
-    }*/
+    @GetMapping("location/{locationId}")
+    public List<MaintenanceTaskResponse> getByLocationId(@PathVariable int locationId){
+        return service.getTasksByLocationId(locationId);
+    }
+
     @PostMapping()
     public MaintenanceTaskResponse createMaintenanceTask(
             @RequestParam("title") String title,
-            @RequestParam("description") String description,
+            @RequestParam(value = "description", required = false) String description,
             @RequestParam("status") String status,
             @RequestParam("priority") String priority,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("accountUsername") String accountUsername,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "accountUsername", required = false) String accountUsername,
             @RequestParam("unitId") int unitId) throws IOException {
 
-        System.out.println(image);
-        MaintenanceTaskRequest body = new MaintenanceTaskRequest(description, title, MaintenanceStatus.valueOf(status), MaintenancePriority.valueOf(priority), image.getBytes(), accountUsername, unitId);
+        byte[] imageByte = image != null ? image.getBytes() : null ;
+        MaintenanceTaskRequest body = new MaintenanceTaskRequest(description, title, MaintenanceStatus.valueOf(status), MaintenancePriority.valueOf(priority), imageByte, accountUsername, unitId);
         return service.createMaintenanceTask(body);
     }
 }
