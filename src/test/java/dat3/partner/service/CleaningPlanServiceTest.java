@@ -4,6 +4,7 @@ import dat3.partner.entity.*;
 import dat3.partner.repository.CleaningPlanRepository;
 import dat3.partner.repository.UnitRepository;
 import dat3.security.entity.UserWithRoles;
+import dat3.security.repository.UserWithRolesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,6 +15,10 @@ import java.time.LocalDate;
 public class CleaningPlanServiceTest {
     @Autowired
     CleaningPlanRepository cleaningPlanRepository;
+    @Autowired
+    UnitRepository unitRepository;
+    @Autowired
+    UserWithRolesRepository userWithRolesRepository;
     CleaningPlanService cleaningPlanService;
 
     UserWithRoles us1, us2;
@@ -29,7 +34,7 @@ public class CleaningPlanServiceTest {
         us1 = new UserWithRoles("user1", "test2", "stud@kea.dk");
         u1 = new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1");
         cleaningPlanRepository.save(new CleaningPlan(LocalDate.parse("26/11/2023"), u1, us1));
-        cleaningPlanService = new CleaningPlanService(cleaningPlanRepository);
+        cleaningPlanService = new CleaningPlanService(cleaningPlanRepository, unitRepository, userWithRolesRepository);
     }
 
     void testAddCleaningPlanSuccess(){}

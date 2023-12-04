@@ -42,7 +42,7 @@ public class Unit {
     @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
     private List<MaintenanceTask> maintenanceTasks;
 
-    @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
     List<CleaningPlan> cleaningPlans;
 
     public void addCleaningPlans(CleaningPlan cleaningPlan){

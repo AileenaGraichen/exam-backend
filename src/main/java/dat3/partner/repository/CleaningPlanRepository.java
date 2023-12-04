@@ -1,5 +1,6 @@
 package dat3.partner.repository;
 
+import dat3.partner.dto.CleaningPlanRequest;
 import dat3.partner.dto.CleaningPlanResponse;
 import dat3.partner.entity.CleaningPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,5 @@ public interface CleaningPlanRepository extends JpaRepository<CleaningPlan, Inte
     boolean existsCleaningPlanByUnit_Id(int unitId);
     List<CleaningPlan> getCleaningPlansByUnit_Id(int unitId);
     boolean existsCleaningPlanByDateAndUnit_IdAndUser_Username(LocalDate date, int unitId, String username);
+    CleaningPlan getCleaningPlanByDateAndUser_UsernameAndUnitId(LocalDate date, String username, int unitId);
 }
