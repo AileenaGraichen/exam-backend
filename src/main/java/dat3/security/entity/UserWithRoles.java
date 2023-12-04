@@ -81,10 +81,16 @@ public class UserWithRoles implements UserDetails {
   }
 
   public void addMaintenanceTask(MaintenanceTask maintenanceTask){
+    if(maintenanceTasks == null){
+      maintenanceTasks = new ArrayList<>();
+    }
     maintenanceTasks.add(maintenanceTask);
   }
 
   public void addCleaningPlans(CleaningPlan cleaningPlan){
+    if(cleaningPlans == null){
+      cleaningPlans = new ArrayList<>();
+    }
     cleaningPlans.add(cleaningPlan);
   }
 
