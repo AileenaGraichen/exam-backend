@@ -26,7 +26,7 @@ public class UnitResponse {
     List<CleaningPlanResponse> cleaningPlans;
     List<MaintenanceTaskResponse> maintenanceTasks;
     //List<UnitTasks>
-    //List<MaintenanceTasks>
+
 
     public UnitResponse(Unit unit) {
         this.id = unit.getId();
@@ -36,9 +36,12 @@ public class UnitResponse {
         this.type = unit.getType();
         this.keyCode = unit.getKeyCode();
         this.ownerId = unit.getOwner().getId();
-        this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
-        //this.maintenanceTasks = unit.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
-
+        if(unit.getCleaningPlans() != null) {
+            this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
+        }
+        if(unit.getMaintenanceTasks() != null) {
+            this.maintenanceTasks = unit.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
+        }
         //Different lists added here too.
         //TODO add blob for img
     }

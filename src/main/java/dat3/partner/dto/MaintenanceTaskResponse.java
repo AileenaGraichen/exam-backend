@@ -25,8 +25,8 @@ public class MaintenanceTaskResponse {
     private MaintenancePriority priority;
     private String image;
     private String MIMEType;
-    private UserWithRolesResponse account;
-    private UnitResponse unit;
+    private String accountUsername;
+    private int unitId;
     private LocalDateTime created;
     private LocalDateTime updated;
 
@@ -41,13 +41,8 @@ public class MaintenanceTaskResponse {
             this.MIMEType = new Tika().detect(maintenanceTask.getImage());
             System.out.println("Detected MIME Type: " + this.MIMEType);
         }
-        /*if(maintenanceTask.getImage() != null) {
-            this.image = Base64.getEncoder().encodeToString(maintenanceTask.getImage());
-            this.MIMEType = new Tika().detect(maintenanceTask.getImage());
-            System.out.println( new Tika().detect(maintenanceTask.getImage()));
-        }*/
-        this.account = new UserWithRolesResponse(maintenanceTask.getAccount());
-        this.unit = new UnitResponse(maintenanceTask.getUnit());
+        this.accountUsername = maintenanceTask.getAccount().getUsername();
+        this.unitId = maintenanceTask.getUnit().getId();
         this.created = maintenanceTask.getCreated();
         this.updated = maintenanceTask.getUpdated();
     }

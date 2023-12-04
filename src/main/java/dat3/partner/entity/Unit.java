@@ -39,18 +39,11 @@ public class Unit {
     @ManyToOne
     private Owner owner;
 
-    @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "unit",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private List<MaintenanceTask> maintenanceTasks;
 
     @OneToMany(mappedBy = "unit", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
     List<CleaningPlan> cleaningPlans;
-
-    public void addCleaningPlans(CleaningPlan cleaningPlan){
-        if(cleaningPlans == null){
-            cleaningPlans = new ArrayList<>();
-        }
-        cleaningPlans.add(cleaningPlan);
-    }
 
     public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
         //Add extra objects to constructor when implementing other entities
@@ -68,6 +61,13 @@ public class Unit {
             maintenanceTasks = new ArrayList<>();
         }
         maintenanceTasks.add(maintenanceTask);
+    }
+
+    public void addCleaningPlans(CleaningPlan cleaningPlan){
+        if(cleaningPlans == null){
+            cleaningPlans = new ArrayList<>();
+        }
+        cleaningPlans.add(cleaningPlan);
     }
 
 }
