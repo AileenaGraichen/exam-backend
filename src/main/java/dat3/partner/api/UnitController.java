@@ -2,11 +2,14 @@ package dat3.partner.api;
 
 import dat3.partner.dto.UnitRequest;
 import dat3.partner.dto.UnitResponse;
+import dat3.partner.entity.UnitStatus;
 import dat3.partner.service.UnitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -44,7 +47,15 @@ public class UnitController {
     }
 
     @PostMapping
-    public UnitResponse addUnit(@RequestBody UnitRequest body){
+    public UnitResponse addUnit(@RequestParam("unitNumber") String unitNumber,
+                                @RequestParam("unitStatus") String unitStatus,
+                                @RequestParam("locationId") int locationId,
+                                @RequestParam("type") String type,
+                                @RequestParam(value = "keyCode", required = false) String keyCode,
+                                @RequestParam("ownerId") int ownerId,
+                                @RequestParam(value = "image", required = false)MultipartFile image) throws IOException {
+        byte[] imageByte = image != null ? image.getBytes() : null ;
+        UnitRequest body = new UnitRequest(unitNumber, UnitStatus.valueOf(unitStatus), locationId, type, keyCode, ownerId, imageByte);
         return unitService.addUnit(body);
     }
 

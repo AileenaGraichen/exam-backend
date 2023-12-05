@@ -16,5 +16,6 @@ public class UnitRequest {
     private String type;
     private String keyCode;
     private int ownerId;
+    private byte[] image;
 }
 
