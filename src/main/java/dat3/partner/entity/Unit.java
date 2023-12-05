@@ -53,6 +53,7 @@ public class Unit {
         this.owner = owner;
         this.type = type;
         this.keyCode = keyCode;
+        location.addUnit(this);
         owner.addUnit(this);
     }
 
