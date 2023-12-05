@@ -41,8 +41,7 @@ public class MaintenanceTaskService {
     }
 
     public MaintenanceTaskResponse createMaintenanceTask(MaintenanceTaskRequest body){
-        UserWithRoles account = userWithRolesRepository.findById(body.getAccountUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No account with this id found"));
+        UserWithRoles account = userWithRolesRepository.findById(body.getAccountUsername()).orElse(null);
         Unit unit = unitRepository.findById(body.getUnitId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No unit with this id found"));
         MaintenanceTask task = new MaintenanceTask(body.getDescription(),
