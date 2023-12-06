@@ -4,6 +4,8 @@ package dat3.partner.api;
 import dat3.partner.dto.CleaningPlanRequest;
 import dat3.partner.dto.CleaningPlanResponse;
 import dat3.partner.service.CleaningPlanService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,11 @@ public class CleaningPlanController {
     public List<CleaningPlanResponse> getAllPlans(){
         return service.getAllPlans();
     }
+    @GetMapping("/pageable")
+    public Page<CleaningPlanResponse> getAllPlansPageable(Pageable pageable){
+        return service.getAllPlansPageable(pageable);
+    }
+
     //get by username
     @GetMapping("/user/{username}")
     public List<CleaningPlanResponse> getByUser(@PathVariable String username){
