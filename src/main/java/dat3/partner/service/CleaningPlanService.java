@@ -10,6 +10,8 @@ import dat3.partner.repository.CleaningPlanRepository;
 import dat3.partner.repository.UnitRepository;
 import dat3.security.entity.UserWithRoles;
 import dat3.security.repository.UserWithRolesRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,10 @@ public class CleaningPlanService {
 
     public List<CleaningPlanResponse> getAllPlans() {
         return cleaningPlanRepository.findAll().stream().map(cleaningPlan -> new CleaningPlanResponse(cleaningPlan)).toList();
+    }
+
+    public Page<CleaningPlanResponse> getAllPlansPageable(Pageable pageable){
+        return cleaningPlanRepository.findAll(pageable).map(cleaningPlan -> new CleaningPlanResponse(cleaningPlan));
     }
     public List<CleaningPlanResponse> getByUserAndDate(String username, LocalDate date) {
         if(!cleaningPlanRepository.existsCleaningPlanByDateAndUser_Username(date, username)){

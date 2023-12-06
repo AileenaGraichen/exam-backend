@@ -57,6 +57,7 @@ public class Unit {
         this.type = type;
         this.keyCode = keyCode;
         this.image = image;
+        location.addUnit(this);
         owner.addUnit(this);
     }
 
