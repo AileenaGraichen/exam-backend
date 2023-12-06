@@ -35,6 +35,9 @@ public class Unit {
     private String type;
     private String keyCode;
 
+    @Column(name = "image", columnDefinition = "LONGBLOB")
+    private byte[] image;
+
     @JsonIgnore
     @ManyToOne
     private Owner owner;
@@ -45,7 +48,7 @@ public class Unit {
     @OneToMany(mappedBy = "unit", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
     List<CleaningPlan> cleaningPlans;
 
-    public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode) {
+    public Unit(String unitNumber, UnitStatus status, Location location, Owner owner, String type, String keyCode, byte[] image) {
         //Add extra objects to constructor when implementing other entities
         this.unitNumber = unitNumber;
         this.unitStatus = status;
@@ -53,6 +56,7 @@ public class Unit {
         this.owner = owner;
         this.type = type;
         this.keyCode = keyCode;
+        this.image = image;
         location.addUnit(this);
         owner.addUnit(this);
     }
