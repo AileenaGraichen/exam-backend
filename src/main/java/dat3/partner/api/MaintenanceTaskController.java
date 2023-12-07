@@ -29,7 +29,7 @@ public class MaintenanceTaskController {
         return service.getAllTasks(pageable);
     }
 
-    @GetMapping("location/{locationId}")
+    @GetMapping("/location/{locationId}")
     public List<MaintenanceTaskResponse> getByLocationId(@PathVariable int locationId){
         return service.getTasksByLocationId(locationId);
     }
