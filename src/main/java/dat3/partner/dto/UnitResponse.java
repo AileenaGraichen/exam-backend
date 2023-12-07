@@ -3,7 +3,9 @@ package dat3.partner.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.partner.entity.*;
 import lombok.*;
+import org.apache.tika.Tika;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +24,11 @@ public class UnitResponse {
     private String type;
     private String keyCode;
     private int ownerId;
+    private String image;
+    private String MIMEType;
 
     List<CleaningPlanResponse> cleaningPlans;
     List<MaintenanceTaskResponse> maintenanceTasks;
-    //List<UnitTasks>
 
 
     public UnitResponse(Unit unit) {
@@ -36,13 +39,15 @@ public class UnitResponse {
         this.type = unit.getType();
         this.keyCode = unit.getKeyCode();
         this.ownerId = unit.getOwner().getId();
+        if (unit.getImage() != null && unit.getImage().length > 0) {
+            this.image = Base64.getEncoder().encodeToString(unit.getImage());
+            this.MIMEType = new Tika().detect(unit.getImage());
+        }
         if(unit.getCleaningPlans() != null) {
             this.cleaningPlans = unit.getCleaningPlans().stream().map(plan -> new CleaningPlanResponse(plan)).toList();
         }
         if(unit.getMaintenanceTasks() != null) {
             this.maintenanceTasks = unit.getMaintenanceTasks().stream().map(task -> new MaintenanceTaskResponse(task)).toList();
         }
-        //Different lists added here too.
-        //TODO add blob for img
     }
 }

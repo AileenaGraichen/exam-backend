@@ -70,16 +70,16 @@ public class SetupDevUsers implements ApplicationRunner {
 
 
         List<Unit> units = new ArrayList<>();
-        Unit unit1 = unitRepository.save(new Unit("101", UnitStatus.AVAILABLE, location1, owner1, "Lejlighed 2 pers.", "Reception"));
-        Unit unit2 = unitRepository.save( new Unit("115", UnitStatus.IN_PROGRESS, location1, owner2, "Lejlighed 2-4 pers.", "Reception"));
-        Unit unit3 = unitRepository.save( new Unit("7", UnitStatus.UNAVAILABLE, location2, owner3, "4-6 pers. m/havudsigt", "På bordet"));
-        Unit unit4 = unitRepository.save( new Unit("19", UnitStatus.AVAILABLE, location2, owner4, "4-6 pers. m/havudsigt", "På bordet"));
-        Unit unit5 = unitRepository.save( new Unit("3", UnitStatus.IN_PROGRESS, location3, owner6, "Lejlighed 2 pers.", "På bordet"));
-        Unit unit6 = unitRepository.save( new Unit("6", UnitStatus.UNAVAILABLE, location4, owner5, "Standard 2-4 pers.", "På bordet"));
-        Unit unit7 = unitRepository.save( new Unit("9", UnitStatus.AVAILABLE, location4, owner6, "2-4 pers. m/havudsigt", "På bordet"));
-        Unit unit8 = unitRepository.save( new Unit("8", UnitStatus.IN_PROGRESS, location5, owner2, "Lejlighed 2 pers. panorama", "3715"));
-        Unit unit9 = unitRepository.save( new Unit("10", UnitStatus.UNAVAILABLE, location5, owner4, "Lejlighed 2 pers. Standard", "3748"));
-        Unit unit10 = unitRepository.save( new Unit("8", UnitStatus.AVAILABLE, location8, owner1, "2-4 pers. - 58m2", "På bordet"));
+        Unit unit1 = unitRepository.save(new Unit("101", UnitStatus.AVAILABLE, location1, owner1, "Lejlighed 2 pers.", "Reception", null));
+        Unit unit2 = unitRepository.save( new Unit("115", UnitStatus.IN_PROGRESS, location1, owner2, "Lejlighed 2-4 pers.", "Reception", null));
+        Unit unit3 = unitRepository.save( new Unit("7", UnitStatus.UNAVAILABLE, location2, owner3, "4-6 pers. m/havudsigt", "På bordet", null));
+        Unit unit4 = unitRepository.save( new Unit("19", UnitStatus.AVAILABLE, location2, owner4, "4-6 pers. m/havudsigt", "På bordet", null));
+        Unit unit5 = unitRepository.save( new Unit("3", UnitStatus.IN_PROGRESS, location3, owner6, "Lejlighed 2 pers.", "På bordet", null));
+        Unit unit6 = unitRepository.save( new Unit("6", UnitStatus.UNAVAILABLE, location4, owner5, "Standard 2-4 pers.", "På bordet", null));
+        Unit unit7 = unitRepository.save( new Unit("9", UnitStatus.AVAILABLE, location4, owner6, "2-4 pers. m/havudsigt", "På bordet", null));
+        Unit unit8 = unitRepository.save( new Unit("8", UnitStatus.IN_PROGRESS, location5, owner2, "Lejlighed 2 pers. panorama", "3715", null));
+        Unit unit9 = unitRepository.save( new Unit("10", UnitStatus.UNAVAILABLE, location5, owner4, "Lejlighed 2 pers. Standard", "3748", null));
+        Unit unit10 = unitRepository.save( new Unit("8", UnitStatus.AVAILABLE, location8, owner1, "2-4 pers. - 58m2", "På bordet", null));
 
 
 

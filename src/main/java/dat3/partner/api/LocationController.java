@@ -5,6 +5,7 @@ import dat3.partner.dto.LocationResponse;
 import dat3.partner.service.LocationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
@@ -40,7 +41,7 @@ public class LocationController {
         return locationService.editLocation(id, body);
     }
     @DeleteMapping("/{id}")
-    public void deleteLocation(@PathVariable int id){
-        locationService.deleteLocation(id);
+    public ResponseEntity<String> deleteLocation(@PathVariable int id){
+        return locationService.deleteLocation(id);
     }
 }
