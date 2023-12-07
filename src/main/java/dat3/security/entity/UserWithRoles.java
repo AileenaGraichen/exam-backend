@@ -69,7 +69,7 @@ public class UserWithRoles implements UserDetails {
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, fetch=FetchType.EAGER)
   private List<CleaningPlan> cleaningPlans;
 
-  @OneToMany(mappedBy = "account",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
   private List<MaintenanceTask> maintenanceTasks = new ArrayList<>();
 
   public UserWithRoles() {}
