@@ -30,7 +30,7 @@ public class UnitRepositoryTest {
     void setup(){
         l1 = locationRepository.save(new Location("DueOdde", "Havnevej 23"));
         Owner o1 = ownerRepository.save(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
-        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1"));
+        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1", null));
     }
 
     @Test

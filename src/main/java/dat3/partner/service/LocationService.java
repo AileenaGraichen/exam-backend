@@ -9,6 +9,7 @@ import dat3.security.dto.LoginRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -61,7 +62,7 @@ public class LocationService {
         return new LocationResponse(editLocation);
     }
 
-    public void deleteLocation(int id) {
+    public ResponseEntity<String> deleteLocation(int id) {
         if(unitRepository.existsByLocationId(id)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Units are attached to this location");
         }
@@ -70,6 +71,7 @@ public class LocationService {
         }
         else{
             locationRepository.deleteById(id);
+            return ResponseEntity.ok("{\"message\": \"Location deleted successfully\"}");
         }
     }
 

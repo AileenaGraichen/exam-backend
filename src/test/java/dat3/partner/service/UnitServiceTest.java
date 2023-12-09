@@ -38,7 +38,7 @@ public class UnitServiceTest {
         o1 = ownerRepository.save(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
         //Add cleaning plan and maintenance tasks here after implementation of api.
         //Fix constructor for this too.
-        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1"));
+        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1", null));
 
         unitService = new UnitService(unitRepository, locationRepository, ownerRepository);
     }

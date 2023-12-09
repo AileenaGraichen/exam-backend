@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.partner.entity.MaintenancePriority;
 import dat3.partner.entity.MaintenanceStatus;
 import dat3.partner.entity.MaintenanceTask;
-import dat3.security.dto.UserWithRolesResponse;
 import lombok.*;
 import org.apache.tika.Tika;
 
@@ -27,6 +26,7 @@ public class MaintenanceTaskResponse {
     private String MIMEType;
     private String accountUsername;
     private int unitId;
+    private String unitNumber;
     private LocalDateTime created;
     private LocalDateTime updated;
 
@@ -39,10 +39,12 @@ public class MaintenanceTaskResponse {
         if (maintenanceTask.getImage() != null && maintenanceTask.getImage().length > 0) {
             this.image = Base64.getEncoder().encodeToString(maintenanceTask.getImage());
             this.MIMEType = new Tika().detect(maintenanceTask.getImage());
-            System.out.println("Detected MIME Type: " + this.MIMEType);
         }
-        this.accountUsername = maintenanceTask.getAccount().getUsername();
+        if(maintenanceTask.getAssignedUser() != null) {
+            this.accountUsername = maintenanceTask.getAssignedUser().getUsername();
+        }
         this.unitId = maintenanceTask.getUnit().getId();
+        this.unitNumber = maintenanceTask.getUnit().getUnitNumber();
         this.created = maintenanceTask.getCreated();
         this.updated = maintenanceTask.getUpdated();
     }

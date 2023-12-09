@@ -62,13 +62,48 @@ public class SecurityConfig {
                             .accessDeniedHandler(new CustomOAuth2AccessDeniedHandler()));
     
     http.authorizeHttpRequests((authorize) -> authorize
+            //SecurityControllers
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/auth/login")).permitAll()
-
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/user-with-role")).hasAuthority("ADMIN")
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/user-with-role")).hasAuthority("ADMIN")
             .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/user-with-role")).hasAuthority("ADMIN")//Only Admin can access the accounts to the site
-            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/location")).permitAll()
 
+            //LocationControllers
+            //Get endpoints usable by all authorized users
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/location")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/location/{id}")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/location/{id}")).hasAuthority("ADMIN")
+
+            //UnitController
+            //Get endpoints usable by all authorized users
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/unit")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/unit/{id}")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/unit/{id}")).hasAuthority("ADMIN")
+
+            //OwnerController
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/owner")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/owner/{id}")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/owner/search/{search}")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/owner/byMobile")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/owner")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/owner/{id}")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/owner/{id}")).hasAuthority("ADMIN")
+
+            //MaintenanceTaskController
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/maintenance-task")).hasAnyAuthority("ADMIN", "TECH")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/maintenance-task/location/{locationId}")).hasAnyAuthority("ADMIN", "TECH")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/maintenance-task")).hasAnyAuthority("ADMIN", "TECH")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.PATCH, "/api/maintenance-task")).hasAnyAuthority("ADMIN", "TECH")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/maintenance-task")).hasAuthority("ADMIN")
+
+            //CleaningPlanController
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cleaning")).hasAnyAuthority("ADMIN", "CLEAN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cleaning/pageable")).hasAnyAuthority("ADMIN", "CLEAN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cleaning/user/{username}")).hasAnyAuthority("ADMIN", "CLEAN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cleaning/unit/{unitId}")).hasAnyAuthority("ADMIN", "CLEAN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/cleaning/{username}/{date}")).hasAnyAuthority("ADMIN", "CLEAN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/cleaning")).hasAuthority("ADMIN")
+            .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.DELETE, "/api/cleaning")).hasAuthority("ADMIN")
 
 
             //Allow index.html and everything else on root level. So make sure to put ALL your endpoints under /api
@@ -76,9 +111,6 @@ public class SecurityConfig {
 
             .requestMatchers(mvcMatcherBuilder.pattern("/error")).permitAll()
 
-            //This is for demo purposes only, and should be removed for a real system
-            //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/user-only")).hasAuthority("USER")
-            //.requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/test/admin-only")).hasAuthority("ADMIN")
 
             //Use this to completely disable security (Will not work if endpoints has been marked with @PreAuthorize)
             //.requestMatchers(mvcMatcherBuilder.pattern("/**")).permitAll());

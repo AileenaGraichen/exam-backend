@@ -60,7 +60,7 @@ public class UnitService {
         Owner owner = ownerRepository.findById(body.getOwnerId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No owner with this id found"));
 
-        Unit newUnit = new Unit(body.getUnitNumber(), body.getUnitStatus(), location, owner, body.getType(), body.getKeyCode());
+        Unit newUnit = new Unit(body.getUnitNumber(), body.getUnitStatus(), location, owner, body.getType(), body.getKeyCode(), body.getImage());
 
         return new UnitResponse(unitRepository.save(newUnit));
     }

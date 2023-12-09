@@ -47,8 +47,8 @@ class MaintenanceTaskServiceTest {
         user2 = userWithRolesRepository.save(new UserWithRoles("user2", passwordUsedByAll, "user2@a.dk"));
         location = locationRepository.save(new Location("DueOdde", "Havnevej 23"));
         owner = ownerRepository.save(new Owner("John", "Doe", "john.doe@example.com", "1234567890"));
-        unit1 = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, location, owner, "Type1", "KeyCode1"));
-        unit2 = unitRepository.save( new Unit("U002", UnitStatus.IN_PROGRESS, location, owner, "Type2", "KeyCode2"));
+        unit1 = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, location, owner, "Type1", "KeyCode1", null));
+        unit2 = unitRepository.save( new Unit("U002", UnitStatus.IN_PROGRESS, location, owner, "Type2", "KeyCode2", null));
         task1 = maintenanceTaskRepository.save(new MaintenanceTask("Description 1", "Title 1", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, user1, unit1, null));
         task2 = maintenanceTaskRepository.save(new MaintenanceTask("Description 2", "Title 2", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, user2, unit2, null));
         maintenanceTaskService = new MaintenanceTaskService(maintenanceTaskRepository, userWithRolesRepository, unitRepository);
