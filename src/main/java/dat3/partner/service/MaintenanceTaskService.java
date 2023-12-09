@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,14 @@ public class MaintenanceTaskService {
 
     public List<MaintenanceTaskResponse> getTasksByLocationId(int id){
         List<MaintenanceTask> tasks = repository.findTasksByLocationId(id);
+        return tasks.stream().map(task -> new MaintenanceTaskResponse(task)).toList();
+    }
+
+    public List<MaintenanceTaskResponse> getTasksBySearch(String search){
+        List<MaintenanceTask> tasks = repository.findByUnitNumber(search);
+        if(tasks.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No task for unit found");
+        }
         return tasks.stream().map(task -> new MaintenanceTaskResponse(task)).toList();
     }
 

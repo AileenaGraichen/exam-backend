@@ -39,6 +39,11 @@ public class MaintenanceTaskController {
         return service.getTasksByLocationId(locationId);
     }
 
+    @GetMapping("search/{search}")
+    public List<MaintenanceTaskResponse> getTasksBySearch(@PathVariable String search){
+        return service.getTasksBySearch(search);
+    }
+
     @PostMapping()
     public MaintenanceTaskResponse createMaintenanceTask(
             @RequestParam("title") String title,
