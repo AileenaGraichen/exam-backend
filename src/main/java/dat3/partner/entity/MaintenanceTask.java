@@ -9,9 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -38,17 +36,27 @@ public class MaintenanceTask {
     private byte[] image;
 
     @ManyToOne
-    private UserWithRoles account;
+    private UserWithRoles assignedUser;
     @ManyToOne
     private Unit unit;
 
-    public MaintenanceTask(String description, String title, MaintenanceStatus status, MaintenancePriority priority, UserWithRoles account, Unit unit, byte[] image){
+    public MaintenanceTask(String description, String title, MaintenanceStatus status, MaintenancePriority priority, Unit unit, byte[] image) {
         this.description = description;
         this.title = title;
         this.status = status;
         this.priority = priority;
         this.image = image;
-        this.account = account;
+        this.unit = unit;
+        unit.addMaintenanceTask(this);
+    }
+
+    public MaintenanceTask(String description, String title, MaintenanceStatus status, MaintenancePriority priority, UserWithRoles account, Unit unit, byte[] image) {
+        this.description = description;
+        this.title = title;
+        this.status = status;
+        this.priority = priority;
+        this.image = image;
+        this.assignedUser = account;
         this.unit = unit;
         account.addMaintenanceTask(this);
         unit.addMaintenanceTask(this);
