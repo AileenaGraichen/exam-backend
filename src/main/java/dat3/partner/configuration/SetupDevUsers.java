@@ -44,7 +44,7 @@ public class SetupDevUsers implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         //setupUserWithRoleUsers();
-        setupTestData();
+        //setupTestData();
     }
 
 
