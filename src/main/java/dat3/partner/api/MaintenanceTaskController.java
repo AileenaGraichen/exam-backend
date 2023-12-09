@@ -29,9 +29,19 @@ public class MaintenanceTaskController {
         return service.getAllTasks(pageable);
     }
 
+    @GetMapping("/{id}")
+    public MaintenanceTaskResponse getMaintenanceTaskById(@PathVariable int id){
+        return service.getTaskById(id);
+    }
+
     @GetMapping("location/{locationId}")
     public List<MaintenanceTaskResponse> getByLocationId(@PathVariable int locationId){
         return service.getTasksByLocationId(locationId);
+    }
+
+    @GetMapping("search/{search}")
+    public List<MaintenanceTaskResponse> getTasksBySearch(@PathVariable String search){
+        return service.getTasksBySearch(search);
     }
 
     @PostMapping()
@@ -43,9 +53,16 @@ public class MaintenanceTaskController {
             @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam(value = "accountUsername", required = false) String accountUsername,
             @RequestParam("unitId") int unitId) throws IOException {
-
+        if(accountUsername.isEmpty()){
+            accountUsername = null;
+        }
         byte[] imageByte = image != null ? image.getBytes() : null ;
         MaintenanceTaskRequest body = new MaintenanceTaskRequest(description, title, MaintenanceStatus.valueOf(status), MaintenancePriority.valueOf(priority), imageByte, accountUsername, unitId);
         return service.createMaintenanceTask(body);
+    }
+
+    @PatchMapping("assign/{taskId}/{username}")
+    public MaintenanceTaskResponse assignUser(@PathVariable String username, @PathVariable int taskId){
+        return service.assignUserToTask(taskId, username);
     }
 }

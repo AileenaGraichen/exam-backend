@@ -43,8 +43,8 @@ public class SetupDevUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        setupUserWithRoleUsers();
-        setupTestData();
+        //setupUserWithRoleUsers();
+        //setupTestData();
     }
 
 
@@ -70,20 +70,20 @@ public class SetupDevUsers implements ApplicationRunner {
 
 
         List<Unit> units = new ArrayList<>();
-        Unit unit1 = unitRepository.save(new Unit("101", UnitStatus.AVAILABLE, location1, owner1, "Lejlighed 2 pers.", "Reception"));
-        Unit unit2 = unitRepository.save( new Unit("115", UnitStatus.IN_PROGRESS, location1, owner2, "Lejlighed 2-4 pers.", "Reception"));
-        Unit unit3 = unitRepository.save( new Unit("7", UnitStatus.UNAVAILABLE, location2, owner3, "4-6 pers. m/havudsigt", "På bordet"));
-        Unit unit4 = unitRepository.save( new Unit("19", UnitStatus.AVAILABLE, location2, owner4, "4-6 pers. m/havudsigt", "På bordet"));
-        Unit unit5 = unitRepository.save( new Unit("3", UnitStatus.IN_PROGRESS, location3, owner6, "Lejlighed 2 pers.", "På bordet"));
-        Unit unit6 = unitRepository.save( new Unit("6", UnitStatus.UNAVAILABLE, location4, owner5, "Standard 2-4 pers.", "På bordet"));
-        Unit unit7 = unitRepository.save( new Unit("9", UnitStatus.AVAILABLE, location4, owner6, "2-4 pers. m/havudsigt", "På bordet"));
-        Unit unit8 = unitRepository.save( new Unit("8", UnitStatus.IN_PROGRESS, location5, owner2, "Lejlighed 2 pers. panorama", "3715"));
-        Unit unit9 = unitRepository.save( new Unit("10", UnitStatus.UNAVAILABLE, location5, owner4, "Lejlighed 2 pers. Standard", "3748"));
-        Unit unit10 = unitRepository.save( new Unit("8", UnitStatus.AVAILABLE, location8, owner1, "2-4 pers. - 58m2", "På bordet"));
+        Unit unit1 = unitRepository.save(new Unit("101", UnitStatus.AVAILABLE, location1, owner1, "Lejlighed 2 pers.", "Reception", null));
+        Unit unit2 = unitRepository.save( new Unit("115", UnitStatus.IN_PROGRESS, location1, owner2, "Lejlighed 2-4 pers.", "Reception", null));
+        Unit unit3 = unitRepository.save( new Unit("7", UnitStatus.UNAVAILABLE, location2, owner3, "4-6 pers. m/havudsigt", "På bordet", null));
+        Unit unit4 = unitRepository.save( new Unit("19", UnitStatus.AVAILABLE, location2, owner4, "4-6 pers. m/havudsigt", "På bordet", null));
+        Unit unit5 = unitRepository.save( new Unit("3", UnitStatus.IN_PROGRESS, location3, owner6, "Lejlighed 2 pers.", "På bordet", null));
+        Unit unit6 = unitRepository.save( new Unit("6", UnitStatus.UNAVAILABLE, location4, owner5, "Standard 2-4 pers.", "På bordet", null));
+        Unit unit7 = unitRepository.save( new Unit("9", UnitStatus.AVAILABLE, location4, owner6, "2-4 pers. m/havudsigt", "På bordet", null));
+        Unit unit8 = unitRepository.save( new Unit("8", UnitStatus.IN_PROGRESS, location5, owner2, "Lejlighed 2 pers. panorama", "3715", null));
+        Unit unit9 = unitRepository.save( new Unit("10", UnitStatus.UNAVAILABLE, location5, owner4, "Lejlighed 2 pers. Standard", "3748", null));
+        Unit unit10 = unitRepository.save( new Unit("8", UnitStatus.AVAILABLE, location8, owner1, "2-4 pers. - 58m2", "På bordet", null));
 
 
 
-        List<MaintenanceTask> tasks = new ArrayList<>();
+        /*List<MaintenanceTask> tasks = new ArrayList<>();
         tasks.add(new MaintenanceTask("Vindue i badeværelse revnet", "Vindue revnet", MaintenanceStatus.NOT_STARTED, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unit1, null));
         tasks.add(new MaintenanceTask("Spisebordsstol er væk", "Mangler stol", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit2, null));
         tasks.add(new MaintenanceTask("Bordben knækket på sofabord", "Bordben knækket", MaintenanceStatus.DONE, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unit3, null));
@@ -94,9 +94,9 @@ public class SetupDevUsers implements ApplicationRunner {
         tasks.add(new MaintenanceTask("Der er kun en kop", "Manger service", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unit8, null));
         tasks.add(new MaintenanceTask("Døren til soveværelse er svær at lukke", "Dør binder", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unit9, null));
         tasks.add(new MaintenanceTask("Manglende internet forbindelse", "Internet forbindelse", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit10, null));
-        maintenanceTaskRepository.saveAll(tasks);
+        maintenanceTaskRepository.saveAll(tasks);*/
 
-        List<CleaningPlan> plans = new ArrayList<>();
+        /*List<CleaningPlan> plans = new ArrayList<>();
         plans.add(new CleaningPlan(LocalDate.now(), unit1, userWithRolesRepository.findById("user1").get()));
         plans.add(new CleaningPlan(LocalDate.now(), unit2, userWithRolesRepository.findById("user1").get()));
         plans.add(new CleaningPlan(LocalDate.now(), unit3, userWithRolesRepository.findById("user1").get()));
@@ -117,7 +117,7 @@ public class SetupDevUsers implements ApplicationRunner {
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit6, userWithRolesRepository.findById("user3").get()));
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit7, userWithRolesRepository.findById("user3").get()));
         cleaningPlanRepository.saveAll(plans);
-
+*/
     }
 
 

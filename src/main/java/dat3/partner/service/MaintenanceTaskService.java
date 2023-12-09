@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,23 +36,64 @@ public class MaintenanceTaskService {
         return tasks.map(task -> new MaintenanceTaskResponse(task));
     }
 
+    public MaintenanceTaskResponse getTaskById(int id){
+        MaintenanceTask task = repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No task with this id found"));
+        return new MaintenanceTaskResponse(task);
+    }
+
     public List<MaintenanceTaskResponse> getTasksByLocationId(int id){
         List<MaintenanceTask> tasks = repository.findTasksByLocationId(id);
         return tasks.stream().map(task -> new MaintenanceTaskResponse(task)).toList();
     }
 
+    public List<MaintenanceTaskResponse> getTasksBySearch(String search){
+        List<MaintenanceTask> tasks = repository.findByUnitNumber(search);
+        if(tasks.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No task for unit found");
+        }
+        return tasks.stream().map(task -> new MaintenanceTaskResponse(task)).toList();
+    }
+
     public MaintenanceTaskResponse createMaintenanceTask(MaintenanceTaskRequest body){
-        UserWithRoles account = userWithRolesRepository.findById(body.getAccountUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No account with this id found"));
+        UserWithRoles account = null;
+        if(body.getAccountUsername() != null) {
+            account = userWithRolesRepository.findById(body.getAccountUsername()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No account with this id found"));
+        }
         Unit unit = unitRepository.findById(body.getUnitId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No unit with this id found"));
-        MaintenanceTask task = new MaintenanceTask(body.getDescription(),
-                body.getTitle(),
-                body.getStatus(),
-                body.getPriority(),
-                account,
-                unit,
-                body.getImage());
+
+        // Explicitly handle the case where account is null
+        MaintenanceTask task;
+        if (account != null) {
+            task = new MaintenanceTask(body.getDescription(),
+                    body.getTitle(),
+                    body.getStatus(),
+                    body.getPriority(),
+                    account,
+                    unit,
+                    body.getImage());
+        } else {
+            task = new MaintenanceTask(body.getDescription(),
+                    body.getTitle(),
+                    body.getStatus(),
+                    body.getPriority(),
+                    unit,
+                    body.getImage());
+        }
+        return new MaintenanceTaskResponse(repository.save(task));
+    }
+
+    public MaintenanceTaskResponse assignUserToTask(int taskId, String username) {
+        MaintenanceTask task = repository.findById(taskId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No task with this id found"));
+        UserWithRoles account = userWithRolesRepository.findById(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No account with this id found"));
+
+        task.setAssignedUser(account);
+        account.getMaintenanceTasks().add(task);
+
         return new MaintenanceTaskResponse(repository.save(task));
     }
 }

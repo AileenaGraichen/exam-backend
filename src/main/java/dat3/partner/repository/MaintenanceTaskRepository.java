@@ -19,4 +19,7 @@ public interface MaintenanceTaskRepository extends JpaRepository<MaintenanceTask
             "JOIN u.location l " +
             "WHERE l.id = :locationId")
     List<MaintenanceTask> findTasksByLocationId(@Param("locationId") int locationId);
+
+    @Query("SELECT mt FROM MaintenanceTask mt JOIN mt.unit u WHERE u.unitNumber = :unitNumber")
+    List<MaintenanceTask> findByUnitNumber(@Param("unitNumber") String search);
 }

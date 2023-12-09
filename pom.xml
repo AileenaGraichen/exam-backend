@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
-            <version>1.27</version> <!-- Use the latest version available -->
+            <version>2.5.0</version> <!-- Use the latest version available -->
         </dependency>
     </dependencies>
 
