@@ -35,7 +35,7 @@ public class OwnerRepositoryTest {
         o2 = ownerRepository.save(new Owner("Hans", "Jensen", "studTwo@kea.dk", "+4554893498"));
         o3 = ownerRepository.save(new Owner("Seb", "Jensen", "studThree@kea.dk", "+4509242234"));
         l = locationRepository.save(new Location("DueOdde", "BonBonLandsvej"));
-        u = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l, o1, "Type1", "KeyCode1"));
+        u = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l, o1, "Type1", "KeyCode1", null));
 
     }
 

@@ -52,7 +52,7 @@ public class CleaningPlanServiceTest {
         l1 = locationRepository.save(new Location("Dueodde", "DueoddeVej"));
         o1 = ownerRepository.save(new Owner("Jens", "Hansen", "stud@kea.dk", "+4520394032"));
         us1 = userWithRolesRepository.save(new UserWithRoles("user1", "test2", "stud@kea.dk"));
-        u1 = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1"));
+        u1 = unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, l1, o1, "Type1", "KeyCode1", null));
         cleaningPlanRepository.save(new CleaningPlan(LocalDate.parse("26/11/2023", formatter), u1, us1));
         cleaningPlanService = new CleaningPlanService(cleaningPlanRepository, unitRepository, userWithRolesRepository);
     }

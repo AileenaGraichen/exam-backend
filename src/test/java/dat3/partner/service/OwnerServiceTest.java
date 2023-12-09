@@ -42,7 +42,7 @@ public class OwnerServiceTest {
         ownerRepository.save(new Owner("Jane", "Smith", "jane.smith@example.com", "9876543210"));
         ownerRepository.save(new Owner("Alice", "Johnson", "alice.johnson@example.com", "5678901234"));
         locationRepository.save(new Location("DueOdde", "BonBonLandsvej"));
-        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type1", "KeyCode1"));
+        unitRepository.save(new Unit("U001", UnitStatus.AVAILABLE, locationRepository.findById(1).get(), ownerRepository.findById(1).get(), "Type1", "KeyCode1", null));
 
         ownerService = new OwnerService(ownerRepository);
     }
