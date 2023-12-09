@@ -14,6 +14,6 @@ import java.util.List;
 public class CleaningPlanRequest {
     int unitId;
     private String userName;
-    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     LocalDate date;
 }
