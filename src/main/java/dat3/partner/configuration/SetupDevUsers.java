@@ -43,7 +43,7 @@ public class SetupDevUsers implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        setupUserWithRoleUsers();
+        //setupUserWithRoleUsers();
         setupTestData();
     }
 
@@ -83,7 +83,7 @@ public class SetupDevUsers implements ApplicationRunner {
 
 
 
-        List<MaintenanceTask> tasks = new ArrayList<>();
+        /*List<MaintenanceTask> tasks = new ArrayList<>();
         tasks.add(new MaintenanceTask("Vindue i badeværelse revnet", "Vindue revnet", MaintenanceStatus.NOT_STARTED, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user1").get(), unit1, null));
         tasks.add(new MaintenanceTask("Spisebordsstol er væk", "Mangler stol", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit2, null));
         tasks.add(new MaintenanceTask("Bordben knækket på sofabord", "Bordben knækket", MaintenanceStatus.DONE, MaintenancePriority.HIGH, userWithRolesRepository.findById("user3").get(), unit3, null));
@@ -94,9 +94,9 @@ public class SetupDevUsers implements ApplicationRunner {
         tasks.add(new MaintenanceTask("Der er kun en kop", "Manger service", MaintenanceStatus.IN_PROGRESS, MaintenancePriority.MEDIUM, userWithRolesRepository.findById("user4").get(), unit8, null));
         tasks.add(new MaintenanceTask("Døren til soveværelse er svær at lukke", "Dør binder", MaintenanceStatus.DONE, MaintenancePriority.LOW, userWithRolesRepository.findById("user1").get(), unit9, null));
         tasks.add(new MaintenanceTask("Manglende internet forbindelse", "Internet forbindelse", MaintenanceStatus.NOT_STARTED, MaintenancePriority.HIGH, userWithRolesRepository.findById("user2").get(), unit10, null));
-        maintenanceTaskRepository.saveAll(tasks);
+        maintenanceTaskRepository.saveAll(tasks);*/
 
-        List<CleaningPlan> plans = new ArrayList<>();
+        /*List<CleaningPlan> plans = new ArrayList<>();
         plans.add(new CleaningPlan(LocalDate.now(), unit1, userWithRolesRepository.findById("user1").get()));
         plans.add(new CleaningPlan(LocalDate.now(), unit2, userWithRolesRepository.findById("user1").get()));
         plans.add(new CleaningPlan(LocalDate.now(), unit3, userWithRolesRepository.findById("user1").get()));
@@ -117,7 +117,7 @@ public class SetupDevUsers implements ApplicationRunner {
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit6, userWithRolesRepository.findById("user3").get()));
         plans.add(new CleaningPlan(LocalDate.now().plusDays(6), unit7, userWithRolesRepository.findById("user3").get()));
         cleaningPlanRepository.saveAll(plans);
-
+*/
     }
 
 
